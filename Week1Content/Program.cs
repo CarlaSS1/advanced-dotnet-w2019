@@ -38,18 +38,18 @@ namespace Week1Content
 				//Console.WriteLine(assemblyCustomAttribute.AttributeType);
 			}
 
-			Console.WriteLine("defined types");
+			//Console.WriteLine("defined types");
 			// defined types are all types within an assembly
 			foreach (var assemblyDefinedType in assembly.DefinedTypes)
 			{
-				Console.WriteLine(assemblyDefinedType);
+				//Console.WriteLine(assemblyDefinedType);
 			}
 
-			Console.WriteLine("exported types");
+			//Console.WriteLine("exported types");
 			// exported types are types that are ONLY PUBLIC
 			foreach (var assemblyDefinedType in assembly.ExportedTypes)
 			{
-				Console.WriteLine(assemblyDefinedType);
+				//Console.WriteLine(assemblyDefinedType);
 			}
 
 			// the full name of the assembly
@@ -57,6 +57,20 @@ namespace Week1Content
 
 			// the location of the assembly on disk
 			//Console.WriteLine(assembly.Location);
+
+			//string s = null;
+			// create a new instance of our debug example class
+			DebugExampleClass debugExampleClass = new DebugExampleClass();
+
+			// set our properties of our new class
+			debugExampleClass.MyPropertyOne = "property one";
+			debugExampleClass.MyPropertyTwo = "property one";
+
+			// call our 'DoWork' method on our new class
+			debugExampleClass.DoWork();
+
+			// call our 'PrintUntil' method on our new class
+			debugExampleClass.PrintUntil(10);
 
 			Console.ReadKey();
 		}
