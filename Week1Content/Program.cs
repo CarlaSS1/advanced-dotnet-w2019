@@ -17,6 +17,7 @@
  * Date: 2019-1-6
  */
 using System;
+using System.Reflection;
 
 namespace Week1Content
 {
@@ -24,8 +25,48 @@ namespace Week1Content
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			// retrieves the assembly for the current program
+			var assembly = typeof(Program).Assembly;
+
+			// where the code exists on disk
+			//Console.WriteLine(assembly.CodeBase);
+
+			// custom definitions and behaviour which
+			//  have been applied to the assembly
+			foreach (var assemblyCustomAttribute in assembly.CustomAttributes)
+			{
+				//Console.WriteLine(assemblyCustomAttribute.AttributeType);
+			}
+
+			Console.WriteLine("defined types");
+			// defined types are all types within an assembly
+			foreach (var assemblyDefinedType in assembly.DefinedTypes)
+			{
+				Console.WriteLine(assemblyDefinedType);
+			}
+
+			Console.WriteLine("exported types");
+			// exported types are types that are ONLY PUBLIC
+			foreach (var assemblyDefinedType in assembly.ExportedTypes)
+			{
+				Console.WriteLine(assemblyDefinedType);
+			}
+
+			// the full name of the assembly
+			//Console.WriteLine(assembly.FullName);
+
+			// the location of the assembly on disk
+			//Console.WriteLine(assembly.Location);
+
 			Console.ReadKey();
 		}
+	}
+
+	/// <summary>
+	/// Defines our custom class.
+	/// </summary>
+	class CustomClass
+	{
+		
 	}
 }
