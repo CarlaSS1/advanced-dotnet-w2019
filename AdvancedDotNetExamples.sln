@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week1Content", "Week1Conten
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week2", "Week2", "{5A80BDF5-4EF4-4D5A-A2B2-A753B03EA21B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week1ContentTests", "Week1ContentTests\Week1ContentTests.csproj", "{81B9D473-4892-48CC-8C70-7E62D2AA1B85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week1ContentTests", "Week1ContentTests\Week1ContentTests.csproj", "{81B9D473-4892-48CC-8C70-7E62D2AA1B85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week2Content", "Week2Content\Week2Content.csproj", "{8E8AC959-3D80-4458-BE1D-AC1EC1E610ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{81B9D473-4892-48CC-8C70-7E62D2AA1B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81B9D473-4892-48CC-8C70-7E62D2AA1B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81B9D473-4892-48CC-8C70-7E62D2AA1B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E8AC959-3D80-4458-BE1D-AC1EC1E610ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E8AC959-3D80-4458-BE1D-AC1EC1E610ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E8AC959-3D80-4458-BE1D-AC1EC1E610ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E8AC959-3D80-4458-BE1D-AC1EC1E610ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C7C629AA-E90E-4B94-AD51-64CF32FFEE4A} = {28948D00-C7A7-4B2B-8001-42CB7325D41A}
 		{81B9D473-4892-48CC-8C70-7E62D2AA1B85} = {28948D00-C7A7-4B2B-8001-42CB7325D41A}
+		{8E8AC959-3D80-4458-BE1D-AC1EC1E610ED} = {5A80BDF5-4EF4-4D5A-A2B2-A753B03EA21B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B72C785-24F3-448B-A118-47850E701450}

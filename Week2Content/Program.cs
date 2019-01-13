@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2016-2019 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -14,28 +14,25 @@
  * the License.
  * 
  * User: Nityan
- * Date: 2019-1-10
+ * Date: 2019-1-13
  */
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Week1Content;
+using System;
 
-namespace Week1ContentTests
+namespace Week2Content
 {
 	/// <summary>
-	/// Represents tests for the <see cref="DebugExampleClass"/> class.
+	/// Represents the main program.
 	/// </summary>
-	[TestClass]
-	public class DebugExampleClassTests
+	public class Program
 	{
 		/// <summary>
-		/// Tests a null property after an object is created.
+		/// Defines the entry point of the application.
 		/// </summary>
-		[TestMethod]
-		public void NullPropertyTest()
+		/// <param name="args">The arguments.</param>
+		private static void Main(string[] args)
 		{
-			DebugExampleClass debugExampleClass = new DebugExampleClass();
-
-			Assert.IsNull(debugExampleClass.MyPropertyOne);
+			Console.WriteLine("Press any key to continue...");
+			Console.ReadKey();
 		}
 	}
 }
