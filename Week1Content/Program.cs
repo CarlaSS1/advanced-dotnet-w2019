@@ -17,54 +17,32 @@
  * Date: 2019-1-6
  */
 using System;
-using System.Reflection;
 
 namespace Week1Content
 {
+	/// <summary>
+	/// Represents the main program.
+	/// </summary>
 	public class Program
 	{
+		/// <summary>
+		/// Defines the entry point of the application.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
 		public static void Main(string[] args)
 		{
-			// retrieves the assembly for the current program
-			var assembly = typeof(Program).Assembly;
+			var myAssemblyClass = new MyAssemblyClass();
 
-			// where the code exists on disk
-			//Console.WriteLine(assembly.CodeBase);
+			myAssemblyClass.PrintAssemblyInfo();
 
-			// custom definitions and behaviour which
-			//  have been applied to the assembly
-			foreach (var assemblyCustomAttribute in assembly.CustomAttributes)
-			{
-				//Console.WriteLine(assemblyCustomAttribute.AttributeType);
-			}
+			string s; // cannot assign a breakpoint here, since no code is being executed
 
-			//Console.WriteLine("defined types");
-			// defined types are all types within an assembly
-			foreach (var assemblyDefinedType in assembly.DefinedTypes)
-			{
-				//Console.WriteLine(assemblyDefinedType);
-			}
-
-			//Console.WriteLine("exported types");
-			// exported types are types that are ONLY PUBLIC
-			foreach (var assemblyDefinedType in assembly.ExportedTypes)
-			{
-				//Console.WriteLine(assemblyDefinedType);
-			}
-
-			// the full name of the assembly
-			//Console.WriteLine(assembly.FullName);
-
-			// the location of the assembly on disk
-			//Console.WriteLine(assembly.Location);
-
-			//string s = null;
 			// create a new instance of our debug example class
-			DebugExampleClass debugExampleClass = new DebugExampleClass();
+			var debugExampleClass = new DebugExampleClass();
 
 			// set our properties of our new class
 			debugExampleClass.MyPropertyOne = "property one";
-			debugExampleClass.MyPropertyTwo = "property one";
+			debugExampleClass.MyPropertyTwo = "property two";
 
 			// call our 'DoWork' method on our new class
 			debugExampleClass.DoWork();
@@ -74,13 +52,5 @@ namespace Week1Content
 
 			Console.ReadKey();
 		}
-	}
-
-	/// <summary>
-	/// Defines our custom class.
-	/// </summary>
-	class CustomClass
-	{
-		
 	}
 }
