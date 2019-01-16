@@ -17,6 +17,9 @@
  * Date: 2019-1-13
  */
 using System;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace Week2Content
 {
@@ -31,6 +34,10 @@ namespace Week2Content
 		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
+			var dataFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Person.xml");
+
+			var persons = XElement.Load(dataFile);
+
 			Console.WriteLine("Press any key to continue...");
 			Console.ReadKey();
 		}

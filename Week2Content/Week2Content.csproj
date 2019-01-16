@@ -6,4 +6,10 @@
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="Person.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
