@@ -17,6 +17,7 @@
  * Date: 2019-1-13
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -34,9 +35,39 @@ namespace Week2Content
 		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
+			// AppDomain.CurrentDomain.BaseDirectory yields ${Project Directory}\bin\Debug
+			// AppDomain.CurrentDomain.BaseDirectory yields ${Project Directory}\bin\Release
 			var dataFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Person.xml");
 
-			var persons = XElement.Load(dataFile);
+			XElement persons = XElement.Load(dataFile);
+			
+			// from 'person' -> variable
+			// persons -> list or collection
+			// select -> retrieves a given object from the list or
+			// allows us to project the elements into a new sequence
+			// retrieves the first name of each person in the collection
+			// when the program reaches this line, the query will not run right away
+			var query = from person in persons.Elements()
+						select person.Element("FirstName")?.Value;
+
+			// the above query and the below for loop are equivalent
+
+			var firstNames = new List<string>();
+
+			// this code will execute the query right away
+			foreach (var person in persons.Elements())
+			{
+				var firstName = person.Element("FirstName")?.Value;
+				firstNames.Add(firstName);
+
+				Console.WriteLine(firstName);
+			}
+
+			// the query is executed here
+			foreach (var firstName in query)
+			{
+				Console.WriteLine(firstName);
+			}
 
 			Console.WriteLine("Press any key to continue...");
 			Console.ReadKey();
