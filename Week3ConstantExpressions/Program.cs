@@ -14,21 +14,17 @@
  * the License.
  * 
  * User: Nityan Khanna
- * Date: 2019-1-9
+ * Date: 2019-1-18
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Week1Content
+namespace Week3ConstantExpressions
 {
-	/// <summary>
-	/// Represents a custom class.
-	/// The purpose of this class is to demonstrate the difference between defined types and exported type.
-	/// Since this class is not public it will not appear in the list of exported types.
-	/// </summary>
-	class CustomClass
+	public class Program
 	{
-
+		private static void Main(string[] args)
+		{
+			Console.ReadKey();
+		}
 	}
 }
