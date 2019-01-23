@@ -17,6 +17,7 @@
  * Date: 2019-1-18
  */
 using System;
+using System.Linq.Expressions;
 
 namespace Week3BinaryExpressions
 {
@@ -24,6 +25,39 @@ namespace Week3BinaryExpressions
 	{
 		private static void Main(string[] args)
 		{
+			var constantExpression = Expression.Constant(50);
+			var constantExpression2 = Expression.Constant(5);
+
+			// creates a binary expression that uses the and operator
+			// to 'AND' our two constant expressions together
+			var binaryExpression = Expression.MakeBinary(ExpressionType.And, constantExpression, constantExpression2);
+
+			// creates an expression that adds the values of
+			// two constant expressions together
+			var addExpression = Expression.Add(constantExpression, constantExpression2);
+
+			// compile and invokes the lambda expression
+			var result = Expression.Lambda(addExpression).Compile().DynamicInvoke();
+
+			// print the result
+			Console.WriteLine(result);
+
+			// print the out string representation of our binary expression
+			// our output is (50 & 5)
+			Console.WriteLine(binaryExpression.ToString());
+
+			// attempt to declare and initialize a constant expression of type integer
+			// and assign the value of the constant expression to null
+			// this will crash because we cannot assign null to an int
+			// the exception will be of type 'ArgumentException', stating that the types do not match
+			// var integerExpression = Expression.Constant(null, typeof(int));
+
+
+			var seven = Expression.Constant(7);
+			var six = Expression.Constant(6);
+
+			var multiplicationExpression = Expression.MakeBinary(ExpressionType.Multiply, six, seven);
+
 			Console.ReadKey();
 		}
 	}

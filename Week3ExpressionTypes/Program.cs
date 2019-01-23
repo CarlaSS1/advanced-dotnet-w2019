@@ -17,6 +17,7 @@
  * Date: 2019-1-18
  */
 using System;
+using System.Linq.Expressions;
 
 namespace Week3ExpressionTypes
 {
@@ -24,6 +25,25 @@ namespace Week3ExpressionTypes
 	{
 		private static void Main(string[] args)
 		{
+			// declare and initialize our constant expression to a value of 100
+			var constantExpression = Expression.Constant(100);
+
+			// create a binary expression, with an expression type of add
+			// the left side of our expression is a constant expression with the value of 100
+			// the right side of our expression is a constant expression with the value of 5
+			// the resulting expression is a binary expression
+			var binaryExpression = Expression.MakeBinary(ExpressionType.Add, constantExpression, Expression.Constant(5));
+
+			// convert our binary expression to a lambda expression
+			// then compile our lambda expression
+			var lambdaExpression = Expression.Lambda(binaryExpression).Compile();
+
+			// invoke our lambda expression
+			var result = lambdaExpression.DynamicInvoke();
+
+			// print the result
+			Console.WriteLine($"Result is: {result}");
+
 			Console.ReadKey();
 		}
 	}
