@@ -17,6 +17,7 @@
  * Date: 2019-1-24
  */
 using System;
+using System.Linq.Expressions;
 
 namespace Week3ParameterExpressions
 {
@@ -24,6 +25,20 @@ namespace Week3ParameterExpressions
 	{
 		private static void Main(string[] args)
 		{
+
+			// creates a parameter expression of type string, with the variable name of "s";
+			ParameterExpression parameterExpression = Expression.Parameter(typeof(string), "s");
+
+			Console.WriteLine(parameterExpression.Name);
+			Console.WriteLine(parameterExpression.NodeType);
+
+			string x = "";
+
+			var parameterExpression2 = Expression.Parameter(x.GetType(), "a");
+
+			Console.WriteLine($"Parameter expression 1: {parameterExpression}");
+			Console.WriteLine($"Parameter expression 2: {parameterExpression2}");
+
 			Console.ReadKey();
 		}
 	}

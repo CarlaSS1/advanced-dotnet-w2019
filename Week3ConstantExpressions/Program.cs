@@ -17,6 +17,7 @@
  * Date: 2019-1-18
  */
 using System;
+using System.Linq.Expressions;
 
 namespace Week3ConstantExpressions
 {
@@ -24,7 +25,21 @@ namespace Week3ConstantExpressions
 	{
 		private static void Main(string[] args)
 		{
+			// declare and initialize a constant expression with the value of "hello"
+			var constantExpression = Expression.Constant("hello");
+
+			// declare and initialize a constant expression with the value of 5
+			var constantExpression2 = Expression.Constant(3);
+
+			// declare and initialize a constant expression with the value of a Person object instance
+			var constantExpression3 = Expression.Constant(new Person());
+
 			Console.ReadKey();
 		}
+	}
+
+	public class Person
+	{
+		public string Name { get; set; }
 	}
 }

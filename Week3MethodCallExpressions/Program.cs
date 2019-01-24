@@ -17,6 +17,9 @@
  * Date: 2019-1-24
  */
 using System;
+using System.Linq.Expressions;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 
 namespace Week3MethodCallExpressions
 {
@@ -24,6 +27,27 @@ namespace Week3MethodCallExpressions
 	{
 		private static void Main(string[] args)
 		{
+			// creates a parameter expression of type string, with the variable name of "s";
+			ParameterExpression parameterExpression = Expression.Parameter(typeof(string), "s");
+
+			Console.WriteLine(parameterExpression.Name);
+			Console.WriteLine(parameterExpression.NodeType);
+
+			string x = "";
+
+			var parameterExpression2 = Expression.Parameter(x.GetType(), "a");
+
+			//var type = typeof("hello");
+			//var myInt = 2;
+			//var type2 = typeof(myInt);
+
+
+			// declare an initialize our method call expression to access the "ToLower" method on the string class
+			// we need provide the types of arguments to our method call expression
+			// this helps avoid issues where methods are overloaded within a given class or parent class
+			MethodCallExpression methodCallExpression = Expression.Call(parameterExpression, typeof(string).GetMethod("ToLower", Type.EmptyTypes));
+
+
 			Console.ReadKey();
 		}
 	}

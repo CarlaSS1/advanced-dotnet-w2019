@@ -17,6 +17,8 @@
  * Date: 2019-1-23
  */
 using System;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Week3PropertyExpressions
 {
@@ -24,7 +26,52 @@ namespace Week3PropertyExpressions
 	{
 		private static void Main(string[] args)
 		{
+			// 
+			var person = new Person();
+
+			// declare and initialize our property expression
+			// we do this by creating a constant expression
+			// and setting the value of the constant expression to our object that we want to access
+			// we also need to provide the name of the property we are accessing on our object
+			var propertyExpression = Expression.Property(Expression.Constant(person), "Name");
+
+			// accesses the Person class
+			// retrieves the name member from the person class
+			// retrieves the first element in the array
+			var memberInfo = typeof(Person).GetMember("Name")[0];
+
+			// declare and initialize our property expression
+			// we are accessing the member of the Person class
+			// by providing the member information, which is retrieved using reflection
+			// and the typeof operator
+			var propertyExpression2 = Expression.MakeMemberAccess(Expression.Constant(person), memberInfo);
+
+			// get the member info of the gender field on our person class
+			var genderMemberInfo = typeof(Person).GetMember("Gender")[0];
+
+			// declare and initialize our member access
+			// to retrieve the gender field from our person class
+			var memberExpression = Expression.MakeMemberAccess(Expression.Constant(person), genderMemberInfo);
+
+			// print the property expressions
+			Console.WriteLine(propertyExpression.ToString());
+			Console.WriteLine(propertyExpression2.ToString());
+
+			// print the member expression
+			Console.WriteLine(memberExpression.ToString());
+
 			Console.ReadKey();
 		}
+	}
+
+	public class Person
+	{
+		public string Gender = "";
+
+		public event EventHandler myEventHandler;
+
+		public string Name { get; set; }
+
+		public DateTime DateOfBirth { get; set; }
 	}
 }
