@@ -31,15 +31,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week2LinqPart5", "Week2Linq
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week3", "Week3", "{4688D597-E078-4CCD-A04C-336BCFD70D9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3ExpressionTrees", "Week3ExpressionTrees\Week3ExpressionTrees.csproj", "{42069EA2-3441-4E51-BF16-EEA028E00D63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week3ExpressionTrees", "Week3ExpressionTrees\Week3ExpressionTrees.csproj", "{42069EA2-3441-4E51-BF16-EEA028E00D63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3ExpressionTypes", "Week3ExpressionTypes\Week3ExpressionTypes.csproj", "{4218EBC4-1604-487B-ABAF-DDC2BEF8F573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week3ExpressionTypes", "Week3ExpressionTypes\Week3ExpressionTypes.csproj", "{4218EBC4-1604-487B-ABAF-DDC2BEF8F573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3BinaryExpressions", "Week3BinaryExpressions\Week3BinaryExpressions.csproj", "{10518D58-4223-41AA-AADF-D93070CFF26A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week3BinaryExpressions", "Week3BinaryExpressions\Week3BinaryExpressions.csproj", "{10518D58-4223-41AA-AADF-D93070CFF26A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3ConstantExpressions", "Week3ConstantExpressions\Week3ConstantExpressions.csproj", "{A0E679A9-D2B1-47C7-A8E9-A35FE326065E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week3ConstantExpressions", "Week3ConstantExpressions\Week3ConstantExpressions.csproj", "{A0E679A9-D2B1-47C7-A8E9-A35FE326065E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3PropertyExpressions", "Week3PropertyExpressions\Week3PropertyExpressions.csproj", "{194A5468-D7E4-4CA4-94B4-E2D7C33F1896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week3PropertyExpressions", "Week3PropertyExpressions\Week3PropertyExpressions.csproj", "{194A5468-D7E4-4CA4-94B4-E2D7C33F1896}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3ParameterExpressions", "Week3ParameterExpressions\Week3ParameterExpressions.csproj", "{08058516-65EC-49E1-AB5F-CED34AF3F6BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3MethodCallExpressions", "Week3MethodCallExpressions\Week3MethodCallExpressions.csproj", "{C6C2C240-CBBE-4006-9F77-6F9CFCE3FA49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3ExpressionVisitor", "Week3ExpressionVisitor\Week3ExpressionVisitor.csproj", "{3C268565-11A7-427C-90C0-44261BC7C63A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +117,18 @@ Global
 		{194A5468-D7E4-4CA4-94B4-E2D7C33F1896}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{194A5468-D7E4-4CA4-94B4-E2D7C33F1896}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{194A5468-D7E4-4CA4-94B4-E2D7C33F1896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08058516-65EC-49E1-AB5F-CED34AF3F6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08058516-65EC-49E1-AB5F-CED34AF3F6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08058516-65EC-49E1-AB5F-CED34AF3F6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08058516-65EC-49E1-AB5F-CED34AF3F6BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6C2C240-CBBE-4006-9F77-6F9CFCE3FA49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6C2C240-CBBE-4006-9F77-6F9CFCE3FA49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6C2C240-CBBE-4006-9F77-6F9CFCE3FA49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6C2C240-CBBE-4006-9F77-6F9CFCE3FA49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C268565-11A7-427C-90C0-44261BC7C63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C268565-11A7-427C-90C0-44261BC7C63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C268565-11A7-427C-90C0-44261BC7C63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C268565-11A7-427C-90C0-44261BC7C63A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +150,9 @@ Global
 		{10518D58-4223-41AA-AADF-D93070CFF26A} = {4688D597-E078-4CCD-A04C-336BCFD70D9C}
 		{A0E679A9-D2B1-47C7-A8E9-A35FE326065E} = {4688D597-E078-4CCD-A04C-336BCFD70D9C}
 		{194A5468-D7E4-4CA4-94B4-E2D7C33F1896} = {4688D597-E078-4CCD-A04C-336BCFD70D9C}
+		{08058516-65EC-49E1-AB5F-CED34AF3F6BC} = {4688D597-E078-4CCD-A04C-336BCFD70D9C}
+		{C6C2C240-CBBE-4006-9F77-6F9CFCE3FA49} = {4688D597-E078-4CCD-A04C-336BCFD70D9C}
+		{3C268565-11A7-427C-90C0-44261BC7C63A} = {4688D597-E078-4CCD-A04C-336BCFD70D9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B72C785-24F3-448B-A118-47850E701450}
