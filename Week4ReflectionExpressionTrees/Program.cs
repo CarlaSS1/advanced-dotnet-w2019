@@ -46,14 +46,14 @@ namespace Week4ReflectionExpressionTrees
 				new Person("Beatrice", new DateTime(1990, 03, 14))
 			}.AsQueryable();
 
-			ParameterExpression parameterExpression = Expression.Parameter(typeof(Person), "p");
+			var parameterExpression = Expression.Parameter(typeof(Person), "p");
 
-			Expression left = Expression.Property(parameterExpression, typeof(Person).GetProperty("Name"));
-			Expression right = Expression.Constant(null); // TODO: fill in with user input
+			var left = Expression.Property(parameterExpression, typeof(Person).GetProperty("Name"));
+			var right = Expression.Constant(null); // TODO: fill in with user input
 
-			Expression equalsExpression = Expression.Equal(left, right);
+			var equalsExpression = Expression.Equal(left, right);
 
-			MethodCallExpression whereCallExpression = Expression.Call(
+			var whereCallExpression = Expression.Call(
 				typeof(Queryable), 
 				"Where", 
 				new[] {persons.ElementType},

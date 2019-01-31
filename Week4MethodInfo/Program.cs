@@ -34,7 +34,6 @@ namespace Week4MethodInfo
 		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
-
 			Console.WriteLine("Please enter a name to print: ");
 
 			var name = Console.ReadLine();
@@ -43,7 +42,9 @@ namespace Week4MethodInfo
 
 			foreach (var methodInfo in methods)
 			{
-				Console.WriteLine($"method name: {methodInfo.IsAbstract}");
+				Console.Write(Environment.NewLine);
+
+				Console.WriteLine($"method name: {methodInfo.Name}");
 				Console.WriteLine($"method return type: {methodInfo.ReturnType}");
 				Console.WriteLine($"method is is generic: {methodInfo.IsGenericMethod}");
 				Console.WriteLine($"method is abstract: {methodInfo.IsAbstract}");
@@ -51,6 +52,8 @@ namespace Week4MethodInfo
 				var instance = typeof(Person).GetConstructors().FirstOrDefault(c => !c.GetParameters().Any())?.Invoke(null);
 
 				methodInfo.Invoke(instance, methodInfo.GetParameters().Any() ? new object[] { name } : null);
+
+				Console.Write(Environment.NewLine);
 			}
 
 

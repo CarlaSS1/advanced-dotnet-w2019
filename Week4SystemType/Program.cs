@@ -18,11 +18,7 @@
  */
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Week4SystemType
 {
@@ -66,7 +62,7 @@ namespace Week4SystemType
 			// this will not work, because the typeof operator can only accept types, not instances of types
 			//Console.WriteLine($"Type information about: {typeof(new object())}");
 
-			object o = new object();
+			var o = new object();
 
 			// the GetType method returns the "type object" for an instance of given type
 			type = o.GetType();
@@ -110,10 +106,14 @@ namespace Week4SystemType
 				Console.WriteLine(t);
 			}
 
-			var list = new List<MyClass>();
-			var list2 = new List<string>();
-			var list3 = new List<int>();
-			var list4 = new List<object>();
+			Console.Write(Environment.NewLine);
+			Console.WriteLine("generic interfaces");
+
+			// print out all the generic interfaces in the assembly
+			foreach (var t in typeof(Program).Assembly.DefinedTypes.Where(c => c.IsInterface && c.IsGenericType))
+			{
+				Console.WriteLine(t);
+			}
 
 			Console.ReadKey();
 		}
