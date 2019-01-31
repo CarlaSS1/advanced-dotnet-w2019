@@ -22,12 +22,19 @@ using System.Reflection;
 
 namespace Week4ConstructorInfo
 {
+	/// <summary>
+	/// Represents the main program.
+	/// </summary>
 	public class Program
 	{
+		/// <summary>
+		/// Defines the entry point of the application.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
 			// declare our constructor info variable
-			ConstructorInfo[] constructorInfos;
+			ConstructorInfo[] constructors;
 
 			// the ConstructorInfo class contains information and
 			// metadata about constructors for classes
@@ -36,15 +43,15 @@ namespace Week4ConstructorInfo
 			// 
 			// using BindingFlags of public and instance
 			// allows us to only retrieve all the public and instance constructors
-			constructorInfos = typeof(MyClass).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+			constructors = typeof(MyClass).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
 
 			// print out the constructor information for each constructor in the class "MyClass"
-			foreach (var constructorInfo in constructorInfos)
+			foreach (var constructorInfo in constructors)
 			{
 				Console.WriteLine($"Constructor info: {constructorInfo}");
 			}
 
-			foreach (var constructorInfo in constructorInfos)
+			foreach (var constructorInfo in constructors)
 			{
 				// if there are any parameters
 				// we need to supply those parameters when invoking the constructor
@@ -70,10 +77,10 @@ namespace Week4ConstructorInfo
 			}
 
 			// retrieve all the public only constructors from the class DerivedClass
-			constructorInfos = typeof(DerivedClass).GetConstructors();
+			constructors = typeof(DerivedClass).GetConstructors();
 
 			// print the public constructor info
-			foreach (var constructorInfo in constructorInfos)
+			foreach (var constructorInfo in constructors)
 			{
 				Console.WriteLine($"Public Constructor info: {constructorInfo}");
 			}
@@ -81,10 +88,10 @@ namespace Week4ConstructorInfo
 			Console.Write(Environment.NewLine);
 
 			// retrieve all the static non public constructors from the the class DerivedClass
-			constructorInfos = typeof(DerivedClass).GetConstructors(BindingFlags.NonPublic | BindingFlags.Static);
+			constructors = typeof(DerivedClass).GetConstructors(BindingFlags.NonPublic | BindingFlags.Static);
 
 			// print the static constructor info
-			foreach (var constructorInfo in constructorInfos)
+			foreach (var constructorInfo in constructors)
 			{
 				Console.WriteLine($"Static Constructor info: {constructorInfo}");
 			}

@@ -17,13 +17,43 @@
  * Date: 2019-1-30
  */
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Week4MethodInfo
 {
+	/// <summary>
+	/// Represents the main program.
+	/// </summary>
 	public class Program
 	{
+		/// <summary>
+		/// Defines the entry point of the application.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
+
+			Console.WriteLine("Please enter a name to print: ");
+
+			var name = Console.ReadLine();
+
+			var methods = typeof(Person).GetMethods(BindingFlags.Instance | BindingFlags.Public);
+
+			foreach (var methodInfo in methods)
+			{
+				Console.WriteLine($"method name: {methodInfo.IsAbstract}");
+				Console.WriteLine($"method return type: {methodInfo.ReturnType}");
+				Console.WriteLine($"method is is generic: {methodInfo.IsGenericMethod}");
+				Console.WriteLine($"method is abstract: {methodInfo.IsAbstract}");
+
+				var instance = typeof(Person).GetConstructors().FirstOrDefault(c => !c.GetParameters().Any())?.Invoke(null);
+
+				methodInfo.Invoke(instance, methodInfo.GetParameters().Any() ? new object[] { name } : null);
+			}
+
+
 			Console.ReadKey();
 		}
 	}

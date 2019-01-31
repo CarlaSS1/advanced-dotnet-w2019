@@ -35,7 +35,8 @@ namespace Week1Content
 
 			myAssemblyClass.PrintAssemblyInfo();
 
-			string s; // cannot assign a breakpoint here, since no code is being executed
+			// cannot assign a breakpoint here, since no code is being executed
+			// string s; 
 
 			// create a new instance of our debug example class
 			var debugExampleClass = new DebugExampleClass();

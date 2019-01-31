@@ -20,8 +20,15 @@ using System;
 
 namespace Week4PropertyInfo
 {
+	/// <summary>
+	/// Represents the main program.
+	/// </summary>
 	public class Program
 	{
+		/// <summary>
+		/// Defines the entry point of the application.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
 			Console.ReadKey();

@@ -17,15 +17,44 @@
  * Date: 2019-1-30
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Week4SystemType
+namespace Week4MethodInfo
 {
 	/// <summary>
-	/// Represents an abstract class.
+	/// Represents a person.
 	/// </summary>
-	public abstract class MyAbstractClass
+	public class Person
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Person"/> class.
+		/// </summary>
+		public Person()
+		{
+			
+		}
+
+		/// <summary>
+		/// Gets or sets the name.
+		/// </summary>
+		/// <value>The name.</value>
+		public string Name { get; set; }
+
+		/// <summary>
+		/// Displays the name.
+		/// </summary>
+		public void DisplayName()
+		{
+			Console.WriteLine(this.Name);
+		}
+
+		/// <summary>
+		/// Displays the name.
+		/// </summary>
+		/// <param name="name">The name.</param>
+		public void DisplayName(string name)
+		{
+			this.Name = name;
+			this.DisplayName();
+		}
 	}
 }

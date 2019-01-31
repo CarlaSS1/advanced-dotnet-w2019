@@ -26,8 +26,15 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Week4SystemType
 {
+	/// <summary>
+	/// Represents the main program.
+	/// </summary>
 	public class Program
 	{
+		/// <summary>
+		/// Defines the entry point of the application.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
 			// this will not work, because type is an abstract class
