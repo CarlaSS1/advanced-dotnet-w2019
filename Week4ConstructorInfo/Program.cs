@@ -17,6 +17,8 @@
  * Date: 2019-1-30
  */
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace Week4ConstructorInfo
 {
@@ -24,7 +26,121 @@ namespace Week4ConstructorInfo
 	{
 		private static void Main(string[] args)
 		{
+			// declare our constructor info variable
+			ConstructorInfo[] constructorInfos;
+
+			// the ConstructorInfo class contains information and
+			// metadata about constructors for classes
+
+			// retrieve all the public and instance constructors on the class "MyClass"
+			// 
+			// using BindingFlags of public and instance
+			// allows us to only retrieve all the public and instance constructors
+			constructorInfos = typeof(MyClass).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+
+			// print out the constructor information for each constructor in the class "MyClass"
+			foreach (var constructorInfo in constructorInfos)
+			{
+				Console.WriteLine($"Constructor info: {constructorInfo}");
+			}
+
+			foreach (var constructorInfo in constructorInfos)
+			{
+				// if there are any parameters
+				// we need to supply those parameters when invoking the constructor
+				if (constructorInfo.GetParameters().Any())
+				{
+					var c = (MyClass)constructorInfo.Invoke(new object[] {"this value was supplied using the parameterized constructor"});
+
+					Console.WriteLine(c.Value);
+				}
+				else
+				{
+					// invoke the constructor that has no parameters
+					// cast the return value of the invoke method to type MyClass
+					// because by default the invoke method returns type of object
+					MyClass c = (MyClass)constructorInfo.Invoke(null);
+
+					// set the value of value
+					c.Value = "testing value";
+
+					// print the value
+					Console.WriteLine(c.Value);
+				}
+			}
+
+			// retrieve all the public only constructors from the class DerivedClass
+			constructorInfos = typeof(DerivedClass).GetConstructors();
+
+			// print the public constructor info
+			foreach (var constructorInfo in constructorInfos)
+			{
+				Console.WriteLine($"Public Constructor info: {constructorInfo}");
+			}
+
+			Console.Write(Environment.NewLine);
+
+			// retrieve all the static non public constructors from the the class DerivedClass
+			constructorInfos = typeof(DerivedClass).GetConstructors(BindingFlags.NonPublic | BindingFlags.Static);
+
+			// print the static constructor info
+			foreach (var constructorInfo in constructorInfos)
+			{
+				Console.WriteLine($"Static Constructor info: {constructorInfo}");
+			}
+
 			Console.ReadKey();
 		}
 	}
+
+	public class MyClass
+	{
+		public MyClass()
+		{
+			
+		}
+
+		public MyClass(string value)
+		{
+			this.Value = value;
+		}
+
+		public string Value { get; set; }
+	}
+
+	public class DerivedClass : MyClass
+	{
+		static DerivedClass()
+		{
+
+		}
+
+		public DerivedClass()
+		{
+			
+		}
+
+		public DerivedClass(string derivedValue)
+		{
+			this.DerivedValue = derivedValue;
+		}
+
+		public DerivedClass(string value, string derivedValue) : base(value)
+		{
+			this.DerivedValue = derivedValue;
+		}
+
+		public string DerivedValue { get; set; }
+	}
+
+	public interface MyInterface
+	{
+
+	}
+
+	public interface DerivedInterface : MyInterface
+	{
+
+	}
+
 }
