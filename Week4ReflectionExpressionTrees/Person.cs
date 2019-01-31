@@ -62,7 +62,7 @@ namespace Week4ReflectionExpressionTrees
 		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 		public override string ToString()
 		{
-			return $"{this.Name}, {this.DateOfBirth:yyyy-MM-dd}";
+			return $"Name: {this.Name}, Date of Birth: {this.DateOfBirth:yyyy-MM-dd}";
 		}
 	}
 }

@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security;
 
 namespace Week4ReflectionExpressionTrees
 {
@@ -39,11 +40,11 @@ namespace Week4ReflectionExpressionTrees
 
 			var persons = new List<Person>
 			{
-				new Person("Nityan", new DateTime(1982, 01, 01)),
-				new Person("Paul", new DateTime(1977, 05, 04)),
-				new Person("Mo", new DateTime(1970, 02, 11)),
-				new Person("Laura", new DateTime(1986, 12, 12)),
-				new Person("Beatrice", new DateTime(1990, 03, 14))
+				CreateInstance<Person>(new Dictionary<string, object> {{"Name", "Nityan"}, {"DateOfBirth", new DateTime(1982, 01, 01)}}),
+				CreateInstance<Person>(new Dictionary<string, object> {{"Name", "Paul" }, {"DateOfBirth", new DateTime(1977, 05, 14)}}),
+				CreateInstance<Person>(new Dictionary<string, object> {{"Name", "Mo" }, {"DateOfBirth", new DateTime(1977, 02, 11)}}),
+				CreateInstance<Person>(new Dictionary<string, object> {{"Name", "Laura" }, {"DateOfBirth", new DateTime(1986, 12, 12)}}),
+				CreateInstance<Person>(new Dictionary<string, object> {{"Name", "Beatrice" }, {"DateOfBirth", new DateTime(1990, 03, 14)}})
 			}.AsQueryable();
 
 			var parameterExpression = Expression.Parameter(typeof(Person), "p");
@@ -54,9 +55,9 @@ namespace Week4ReflectionExpressionTrees
 			var equalsExpression = Expression.Equal(left, right);
 
 			var whereCallExpression = Expression.Call(
-				typeof(Queryable), 
-				"Where", 
-				new[] {persons.ElementType},
+				typeof(Queryable),
+				"Where",
+				new[] { persons.ElementType },
 				persons.Expression,
 				Expression.Lambda<Func<Person, bool>>(equalsExpression, parameterExpression));
 
@@ -67,7 +68,53 @@ namespace Week4ReflectionExpressionTrees
 				Console.WriteLine(person);
 			}
 
-			Console.WriteLine("Hello World!");
+			Console.ReadKey();
+		}
+
+		/// <summary>
+		/// Creates the instance.
+		/// </summary>
+		/// <typeparam name="T">The type for which to create an instance.</typeparam>
+		/// <param name="properties">The properties.</param>
+		/// <returns>T.</returns>
+		/// <exception cref="System.InvalidOperationException">
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">properties - Value cannot be null</exception>
+		/// <exception cref="System.ArgumentException">
+		/// Properties must not be empty - properties
+		/// or
+		/// Properties must contain 2 entries - properties
+		/// </exception>
+		private static T CreateInstance<T>(Dictionary<string, object> properties) where T : class
+		{
+			var constructorInfo = typeof(T).GetConstructors().FirstOrDefault(c => c.GetParameters().Length == 2);
+
+			if (constructorInfo == null)
+			{
+				throw new InvalidOperationException($"Unable to locate constructor with 2 parameters on class: {typeof(T).Name}");
+			}
+
+			if (constructorInfo.GetParameters()[0].ParameterType != typeof(string) && constructorInfo.GetParameters()[1].ParameterType != typeof(DateTime))
+			{
+				throw new InvalidOperationException($"Unable to locate constructor with correct parameter order on class: {typeof(T).Name}");
+			}
+
+			if (properties == null)
+			{
+				throw new ArgumentNullException(nameof(properties), "Value cannot be null");
+			}
+
+			if (!properties.Any())
+			{
+				throw new ArgumentException("Properties must not be empty", nameof(properties));
+			}
+
+			if (properties.Count != 2)
+			{
+				throw new ArgumentException("Properties must contain 2 entries", nameof(properties));
+			}
+
+			return (T)Expression.Lambda<Func<T>>(Expression.New(constructorInfo, Expression.Constant(properties.Values.ToArray()[0]), Expression.Constant(properties.Values.ToArray()[1]))).Compile().DynamicInvoke();
 		}
 	}
 }
