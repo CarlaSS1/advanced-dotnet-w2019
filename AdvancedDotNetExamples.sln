@@ -59,7 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4SystemType", "Week4Sys
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4ReflectionExpressionTrees", "Week4ReflectionExpressionTrees\Week4ReflectionExpressionTrees.csproj", "{E323C0E7-9FD0-403B-B996-581C2E3797F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week4TypeParameterConstraints", "Week4TypeParameterConstraints\Week4TypeParameterConstraints.csproj", "{EFEFBA2F-4D2F-4FA7-91BD-040BC747F548}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4TypeParameterConstraints", "Week4TypeParameterConstraints\Week4TypeParameterConstraints.csproj", "{EFEFBA2F-4D2F-4FA7-91BD-040BC747F548}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

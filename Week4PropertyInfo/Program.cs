@@ -17,6 +17,7 @@
  * Date: 2019-1-30
  */
 using System;
+using System.Reflection;
 
 namespace Week4PropertyInfo
 {
@@ -31,6 +32,34 @@ namespace Week4PropertyInfo
 		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
+			// retrieve all the public and instance properties from our person class
+			var properties = typeof(Person).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+			// find the default constructor on the person class and invoke it to create an instance of a person
+			var instance = typeof(Person).GetConstructor(Type.EmptyTypes).Invoke(null);
+
+			// for each property on the person class
+			foreach (var propertyInfo in properties)
+			{
+				// if the property is of type string
+				// set the property value to the value of "test name value"
+				if (propertyInfo.PropertyType == typeof(string))
+				{
+					// instance - refers to the object whose property value will be set, in this case, instance is the instance of our person class
+					// the second parameter is the value of the property
+					propertyInfo.SetValue(instance, "test name value");
+				}
+				else if (propertyInfo.PropertyType == typeof(DateTime))
+				{
+					// instance - refers to the object whose property value will be set, in this case, instance is the instance of our person class
+					// the second parameter is the value of the property
+					propertyInfo.SetValue(instance, DateTime.Now);
+				}
+			}
+
+			// print out the instance of our person
+			Console.WriteLine(instance);
+
 			Console.ReadKey();
 		}
 	}
