@@ -17,10 +17,8 @@
  * Date: 2019-1-30
  */
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 
 namespace Week4MethodInfo
 {
@@ -87,7 +85,6 @@ namespace Week4MethodInfo
 				object instance = type.GetConstructors().FirstOrDefault(c => !c.GetParameters().Any())
 				                      ?.Invoke(null);
 
-
 				// find the methods on our common interface ICommonInterface
 				var iCommonInterfaceMethods = typeof(ICommonInterface)
 					.GetMethods(BindingFlags.Instance | BindingFlags.Public).ToList();
@@ -96,7 +93,9 @@ namespace Week4MethodInfo
 				// invoke the method 
 				iCommonInterfaceMethods.ForEach((m) =>
 				{
-					// m 
+					// invoke the current method in the instance of our class
+					// m is the method we are going to invoke
+					// instance is the object on which we are invoking the method
 					m.Invoke(instance, m.GetParameters().Any() ? new object[] {name} : null);
 				});
 			}
@@ -105,28 +104,49 @@ namespace Week4MethodInfo
 		}
 	}
 
+	/// <summary>
+	/// Represents a demo class.
+	/// </summary>
+	/// <seealso cref="Week4MethodInfo.ICommonInterface" />
 	public class MyClass : ICommonInterface
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MyClass" /> class.
+		/// </summary>
 		public MyClass()
 		{
-			
+
 		}
 
+		/// <summary>
+		/// Displays this instance.
+		/// </summary>
 		public void Display()
 		{
 			Console.WriteLine("Called the empty display method");
 		}
 
+		/// <summary>
+		/// Displays the specified information.
+		/// </summary>
+		/// <param name="info">The information.</param>
 		public void Display(string info)
 		{
 			Console.WriteLine($"Hello, {info}");
 		}
 
+		/// <summary>
+		/// Does the common things.
+		/// </summary>
 		public void DoCommonThings()
 		{
 			Console.WriteLine("doing common things");
 		}
 
+		/// <summary>
+		/// Says the common things.
+		/// </summary>
+		/// <param name="phrase">The phrase.</param>
 		public void SayCommonThings(string phrase)
 		{
 			Console.WriteLine("saying common things");
@@ -134,13 +154,24 @@ namespace Week4MethodInfo
 		}
 	}
 
+	/// <summary>
+	/// Represents a second demo class.
+	/// </summary>
+	/// <seealso cref="Week4MethodInfo.ICommonInterface" />
 	public class MyOtherClass : ICommonInterface
 	{
+		/// <summary>
+		/// Does the common things.
+		/// </summary>
 		public void DoCommonThings()
 		{
 			Console.WriteLine("doing common things in our other class");
 		}
 
+		/// <summary>
+		/// Says the common things.
+		/// </summary>
+		/// <param name="phrase">The phrase.</param>
 		public void SayCommonThings(string phrase)
 		{
 			Console.WriteLine("saying common things in our other class");
@@ -148,10 +179,20 @@ namespace Week4MethodInfo
 		}
 	}
 
+	/// <summary>
+	/// Represents a common interface.
+	/// </summary>
 	public interface ICommonInterface
 	{
+		/// <summary>
+		/// Does the common things.
+		/// </summary>
 		void DoCommonThings();
 
+		/// <summary>
+		/// Says the common things.
+		/// </summary>
+		/// <param name="phrase">The phrase.</param>
 		void SayCommonThings(string phrase);
 	}
 }

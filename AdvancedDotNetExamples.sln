@@ -61,6 +61,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4ReflectionExpressionTr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4TypeParameterConstraints", "Week4TypeParameterConstraints\Week4TypeParameterConstraints.csproj", "{EFEFBA2F-4D2F-4FA7-91BD-040BC747F548}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week4ReflectionDynamic", "Week4ReflectionDynamic\Week4ReflectionDynamic.csproj", "{27F58CF8-CB42-4724-9793-45DB877431FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week4ReflectionActivator", "Week4ReflectionActivator\Week4ReflectionActivator.csproj", "{A9A1EDFD-46FD-4F01-BED7-B608A109DC0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +171,14 @@ Global
 		{EFEFBA2F-4D2F-4FA7-91BD-040BC747F548}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFEFBA2F-4D2F-4FA7-91BD-040BC747F548}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFEFBA2F-4D2F-4FA7-91BD-040BC747F548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F58CF8-CB42-4724-9793-45DB877431FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F58CF8-CB42-4724-9793-45DB877431FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F58CF8-CB42-4724-9793-45DB877431FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F58CF8-CB42-4724-9793-45DB877431FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9A1EDFD-46FD-4F01-BED7-B608A109DC0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9A1EDFD-46FD-4F01-BED7-B608A109DC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9A1EDFD-46FD-4F01-BED7-B608A109DC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A1EDFD-46FD-4F01-BED7-B608A109DC0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -197,6 +209,8 @@ Global
 		{14C55C65-23A1-46C2-B487-D43DE18665EA} = {F2452BD3-5AA2-435C-B5CC-AF686E045773}
 		{E323C0E7-9FD0-403B-B996-581C2E3797F3} = {F2452BD3-5AA2-435C-B5CC-AF686E045773}
 		{EFEFBA2F-4D2F-4FA7-91BD-040BC747F548} = {F2452BD3-5AA2-435C-B5CC-AF686E045773}
+		{27F58CF8-CB42-4724-9793-45DB877431FB} = {F2452BD3-5AA2-435C-B5CC-AF686E045773}
+		{A9A1EDFD-46FD-4F01-BED7-B608A109DC0A} = {F2452BD3-5AA2-435C-B5CC-AF686E045773}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B72C785-24F3-448B-A118-47850E701450}

@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security;
 
 namespace Week4ReflectionExpressionTrees
 {
@@ -87,6 +86,7 @@ namespace Week4ReflectionExpressionTrees
 		/// </exception>
 		private static T CreateInstance<T>(Dictionary<string, object> properties) where T : class
 		{
+			// find the first constructor that has 2 parameters
 			var constructorInfo = typeof(T).GetConstructors().FirstOrDefault(c => c.GetParameters().Length == 2);
 
 			if (constructorInfo == null)
@@ -94,27 +94,35 @@ namespace Week4ReflectionExpressionTrees
 				throw new InvalidOperationException($"Unable to locate constructor with 2 parameters on class: {typeof(T).Name}");
 			}
 
+			// if the first parameters is not a string and the second parameter is not a date time, throw an exception
 			if (constructorInfo.GetParameters()[0].ParameterType != typeof(string) && constructorInfo.GetParameters()[1].ParameterType != typeof(DateTime))
 			{
 				throw new InvalidOperationException($"Unable to locate constructor with correct parameter order on class: {typeof(T).Name}");
 			}
 
+			// if properties is null, throw an exception
 			if (properties == null)
 			{
 				throw new ArgumentNullException(nameof(properties), "Value cannot be null");
 			}
 
+			// if properties is empty, throw an exception
 			if (!properties.Any())
 			{
 				throw new ArgumentException("Properties must not be empty", nameof(properties));
 			}
 
+			// if there aren't exactly two properties, throw an exception
 			if (properties.Count != 2)
 			{
 				throw new ArgumentException("Properties must contain 2 entries", nameof(properties));
 			}
 
-			return (T)Expression.Lambda<Func<T>>(Expression.New(constructorInfo, Expression.Constant(properties.Values.ToArray()[0]), Expression.Constant(properties.Values.ToArray()[1]))).Compile().DynamicInvoke();
+			// create a "NEW" expression to create a new instance of our class
+			var newExpression = Expression.New(constructorInfo, Expression.Constant(properties.Values.ToArray()[0]), Expression.Constant(properties.Values.ToArray()[1]));
+
+			// compile and invoke our lambda expression
+			return (T)Expression.Lambda<Func<T>>(newExpression).Compile().DynamicInvoke();
 		}
 	}
 }
