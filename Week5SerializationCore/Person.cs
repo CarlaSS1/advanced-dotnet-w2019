@@ -17,12 +17,18 @@
  * Date: 2019-1-31
  */
 using System;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace Week5SerializationCore
 {
 	/// <summary>
 	/// Represents a person.
 	/// </summary>
+	[XmlRoot]
+	[XmlType]
+	[JsonObject]
+	[Serializable]
 	public class Person
 	{
 		/// <summary>
@@ -37,24 +43,42 @@ namespace Week5SerializationCore
 		/// Gets or sets the name.
 		/// </summary>
 		/// <value>The name.</value>
+		[XmlElement]
+		[JsonProperty]
 		public string Name { get; set; }
 
 		/// <summary>
 		/// Gets or sets the identifier.
 		/// </summary>
 		/// <value>The identifier.</value>
+		[XmlElement]
+		[JsonProperty]
 		public Guid Id { get; set; }
 
 		/// <summary>
 		/// Gets or sets the date of birth.
 		/// </summary>
 		/// <value>The date of birth.</value>
+		[XmlIgnore]
+		[JsonIgnore]
 		public DateTimeOffset DateOfBirth { get; set; }
 
 		/// <summary>
 		/// Gets or sets the date of birth XML.
 		/// </summary>
 		/// <value>The date of birth XML.</value>
-		public string DateOfBirthXml { get; set; }
+		[XmlElement]
+		[JsonProperty]
+		public string DateOfBirthXml
+		{
+			get
+			{
+				return this.DateOfBirth.ToString("o");
+			}
+			set
+			{
+				value = this.DateOfBirth.ToString("o");
+			}
+		}
 	}
 }

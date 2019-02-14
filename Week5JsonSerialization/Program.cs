@@ -17,6 +17,11 @@
  * Date: 2019-1-31
  */
 using System;
+using System.IO;
+using System.Text;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using Week5SerializationCore;
 
 namespace Week5JsonSerialization
 {
@@ -31,6 +36,38 @@ namespace Week5JsonSerialization
 		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
+			// declare and initialize our json serializer
+			// supply type of person to indicate what type of object
+			// is to be serialized
+			var serializer = new JsonSerializer();
+
+			var stringWriter = new StringWriter();
+
+			var person = new Person
+			{
+				Name = "Mary Smith",
+				DateOfBirth = DateTimeOffset.Now,
+				Id = Guid.NewGuid()
+			};
+
+			serializer.Serialize(stringWriter, person);
+
+			var serializedContent = Encoding.UTF8.GetBytes(stringWriter.ToString());
+
+			Console.WriteLine("write our serialized content to a file called 'output.json'");
+
+			// write our serialized content to a file called 'output.json'
+			File.WriteAllBytes($"{AppDomain.CurrentDomain.BaseDirectory}\\output.json", serializedContent);
+
+			Console.WriteLine("read our serialized content from a file called 'output.json'");
+			var bytes = File.ReadAllBytes($"{AppDomain.CurrentDomain.BaseDirectory}\\output.json");
+
+			var jsonReader = new JsonTextReader(new StringReader(Encoding.UTF8.GetString(bytes)));
+
+			var deserializedPerson = (Person)serializer.Deserialize(jsonReader, typeof(Person));
+
+			Console.WriteLine(deserializedPerson.Name);
+
 			Console.ReadKey();
 		}
 	}

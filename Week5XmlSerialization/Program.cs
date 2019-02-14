@@ -17,6 +17,9 @@
  * Date: 2019-1-31
  */
 using System;
+using System.IO;
+using System.Xml.Serialization;
+using Week5SerializationCore;
 
 namespace Week5XmlSerialization
 {
@@ -31,6 +34,36 @@ namespace Week5XmlSerialization
 		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
+			// declare and initialize our xml serializer
+			// supply type of person to indicate what type of object
+			// is to be serialized
+			var serializer = new XmlSerializer(typeof(Person));
+
+			var memoryStream = new MemoryStream();
+
+			var person = new Person
+			{
+				Name = "Mary Smith",
+				DateOfBirth = DateTimeOffset.Now,
+				Id = Guid.NewGuid()
+			};
+
+			serializer.Serialize(memoryStream, person);
+
+			var serializedContent = memoryStream.ToArray();
+
+			Console.WriteLine("write our serialized content to a file called 'output.xml'");
+
+			// write our serialized content to a file called 'output.xml'
+			File.WriteAllBytes($"{AppDomain.CurrentDomain.BaseDirectory}\\output.xml", serializedContent);
+
+			Console.WriteLine("read our serialized content from a file called 'output.xml'");
+			var bytes = File.ReadAllBytes($"{AppDomain.CurrentDomain.BaseDirectory}\\output.xml");
+
+			var deserializedPerson = (Person)serializer.Deserialize(new MemoryStream(bytes));
+
+			Console.WriteLine(deserializedPerson.Name);
+
 			Console.ReadKey();
 		}
 	}

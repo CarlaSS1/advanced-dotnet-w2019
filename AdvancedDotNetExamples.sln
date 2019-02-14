@@ -61,21 +61,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4ReflectionExpressionTr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4TypeParameterConstraints", "Week4TypeParameterConstraints\Week4TypeParameterConstraints.csproj", "{EFEFBA2F-4D2F-4FA7-91BD-040BC747F548}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week4ReflectionDynamic", "Week4ReflectionDynamic\Week4ReflectionDynamic.csproj", "{27F58CF8-CB42-4724-9793-45DB877431FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4ReflectionDynamic", "Week4ReflectionDynamic\Week4ReflectionDynamic.csproj", "{27F58CF8-CB42-4724-9793-45DB877431FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week4ReflectionActivator", "Week4ReflectionActivator\Week4ReflectionActivator.csproj", "{A9A1EDFD-46FD-4F01-BED7-B608A109DC0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week4ReflectionActivator", "Week4ReflectionActivator\Week4ReflectionActivator.csproj", "{A9A1EDFD-46FD-4F01-BED7-B608A109DC0A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week5", "Week5", "{9B28C30E-FA86-464B-B3D6-ECADACC66A30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week5Attributes", "Week5Attributes\Week5Attributes.csproj", "{68582826-0A4A-4255-A6EA-7E9CADFAAF6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week5Attributes", "Week5Attributes\Week5Attributes.csproj", "{68582826-0A4A-4255-A6EA-7E9CADFAAF6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week5BinarySerialization", "Week5BinarySerialization\Week5BinarySerialization.csproj", "{018AFE9A-46D2-4310-BD05-3E2AAD13A90F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week5BinarySerialization", "Week5BinarySerialization\Week5BinarySerialization.csproj", "{018AFE9A-46D2-4310-BD05-3E2AAD13A90F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week5JsonSerialization", "Week5JsonSerialization\Week5JsonSerialization.csproj", "{614510BF-C1A7-4614-95BD-E2605F614F25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week5JsonSerialization", "Week5JsonSerialization\Week5JsonSerialization.csproj", "{614510BF-C1A7-4614-95BD-E2605F614F25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week5XmlSerialization", "Week5XmlSerialization\Week5XmlSerialization.csproj", "{452B019E-F376-4831-B7AC-FCE68C0D98A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week5XmlSerialization", "Week5XmlSerialization\Week5XmlSerialization.csproj", "{452B019E-F376-4831-B7AC-FCE68C0D98A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week5SerializationCore", "Week5SerializationCore\Week5SerializationCore.csproj", "{B63C29D7-7FEB-405C-83AB-CD1B9944126A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week5SerializationCore", "Week5SerializationCore\Week5SerializationCore.csproj", "{B63C29D7-7FEB-405C-83AB-CD1B9944126A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
