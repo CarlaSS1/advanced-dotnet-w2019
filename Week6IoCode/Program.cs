@@ -17,6 +17,7 @@
  * Date: 2019-2-14
  */
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Week6IoCode
@@ -27,13 +28,41 @@ namespace Week6IoCode
 	public class Program
 	{
 		/// <summary>
+		/// The client.
+		/// </summary>
+		private static readonly HttpClient client = new HttpClient();
+
+		/// <summary>
 		/// Defines the entry point of the application.
 		/// </summary>
 		/// <param name="args">The arguments.</param>
 		private static async Task Main(string[] args)
 		{
-			await Task.Delay(1000);
+			// starts the task
+			Task task = DoIoStuffAsync();
+
+			Console.WriteLine("this is synchronous");
+			Console.WriteLine("this is more synchronous");
+			Console.WriteLine("this happens before the await call");
+
+			// await the task to completion
+			await task;
+
+			Console.WriteLine("I am after the await task");
+
 			Console.ReadKey();
+		}
+
+		private static async Task DoIoStuffAsync()
+		{
+			Console.WriteLine("IO task starting");
+			// this is IO bound code, because we are accessing a network resource
+			var result = await client.GetStringAsync("http://example.com");
+
+			Console.WriteLine("IO task about to be printed");
+
+			// print the result of the task
+			Console.WriteLine(result);
 		}
 	}
 }
