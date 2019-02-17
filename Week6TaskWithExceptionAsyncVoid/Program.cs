@@ -17,7 +17,6 @@
  * Date: 2019-2-16
  */
 using System;
-using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -38,7 +37,8 @@ namespace Week6TaskWithExceptionAsyncVoid
 		/// Defines the entry point of the application.
 		/// </summary>
 		/// <param name="args">The arguments.</param>
-		private static void Main(string[] args)
+		/// <returns>Returns a task.</returns>
+		private static async Task Main(string[] args)
 		{
 			Console.ReadKey();
 		}
