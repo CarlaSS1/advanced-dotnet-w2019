@@ -17,6 +17,11 @@
  * Date: 2019-2-16
  */
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Week7TaskBasedAsyncPattern
@@ -27,13 +32,80 @@ namespace Week7TaskBasedAsyncPattern
 	public class Program
 	{
 		/// <summary>
+		/// The client.
+		/// </summary>
+		private static readonly HttpClient client = new HttpClient();
+
+		/// <summary>
 		/// Defines the entry point of the application.
 		/// </summary>
 		/// <param name="args">The arguments.</param>
 		/// <returns>Returns a task.</returns>
 		private static async Task Main(string[] args)
 		{
+			var tasks = TaskYieldAsync("http://mohawkcollege.ca", "http://canada.ca", "http://google.ca", "http://example.com", "http://microsoft.com", "http://apple.com", "http://amazon.com");
+
+			Console.WriteLine("after the task yield has been invoked, but before await");
+
+			var resultTasks = await tasks;
+
+			foreach (var resultTask in resultTasks)
+			{
+				// TODO: print result task to console
+			}
+
+			Console.WriteLine("after await");
+
 			Console.ReadKey();
+		}
+
+		/// <summary>
+		/// Demonstrates a task being yielded, that being, returning control to the caller and continuing the task in a separate managed context.
+		/// </summary>
+		/// <param name="addresses">The addresses.</param>
+		/// <returns>Returns a list of tasks representing web result tasks.</returns>
+		private static async Task<IEnumerable<Task<WebResult>>> TaskYieldAsync(params string[] addresses)
+		{
+			var tasks = new List<Task<WebResult>>();
+
+			tasks.AddRange(addresses.Select(c => GetWebsiteAsync(c, new CancellationTokenSource(3000))));
+
+			Console.WriteLine("before yield");
+
+			// TODO: add yield
+
+			Console.WriteLine("after yield");
+
+			Console.WriteLine("before when any");
+
+			// TODO: add when any
+
+			Console.WriteLine("after when any");
+
+			return tasks;
+		}
+
+		/// <summary>
+		/// Gets a website as an asynchronous operation.
+		/// </summary>
+		/// <param name="address">The address.</param>
+		/// <param name="cancellationTokenSource">The cancellation token source.</param>
+		/// <returns>Returns a web result.</returns>
+		private static async Task<WebResult> GetWebsiteAsync(string address, CancellationTokenSource cancellationTokenSource)
+		{
+			// TODO: implement get async
+			// TODO: implement read content async
+
+			Console.WriteLine($"Retrieving website... {address} on thread: {Thread.CurrentThread.ManagedThreadId}");
+
+			Console.WriteLine($"Website {address} retrieved successfully");
+
+			Console.WriteLine($"Reading content from website... {address} on thread: {Thread.CurrentThread.ManagedThreadId}");
+
+			return new WebResult(address)
+			{
+				//Content = await contentTask
+			};
 		}
 	}
 }
