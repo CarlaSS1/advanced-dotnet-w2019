@@ -43,7 +43,13 @@ namespace Week7TaskBasedAsyncPattern
 		/// <returns>Returns a task.</returns>
 		private static async Task Main(string[] args)
 		{
-			var tasks = TaskYieldAsync("http://mohawkcollege.ca", "http://canada.ca", "http://google.ca", "http://example.com", "http://microsoft.com", "http://apple.com", "http://amazon.com");
+			var tasks = TaskYieldAsync("http://mohawkcollege.ca", 
+								"http://canada.ca", 
+								"http://google.ca", 
+								"http://example.com", 
+								"http://microsoft.com", 
+								"http://apple.com",
+								"http://amazon.com");
 
 			Console.WriteLine("after the task yield has been invoked, but before await");
 
@@ -51,7 +57,7 @@ namespace Week7TaskBasedAsyncPattern
 
 			foreach (var resultTask in resultTasks)
 			{
-				// TODO: print result task to console
+				Console.WriteLine(await resultTask);
 			}
 
 			Console.WriteLine("after await");
@@ -72,13 +78,17 @@ namespace Week7TaskBasedAsyncPattern
 
 			Console.WriteLine("before yield");
 
-			// TODO: add yield
+			// yield control of the method to the caller to continue the async processing
+			await Task.Yield();
 
 			Console.WriteLine("after yield");
 
 			Console.WriteLine("before when any");
 
-			// TODO: add when any
+			// when any of the tasks are complete (even if that is only 1 task of many)
+			// return the result of the task to the caller
+			// and continue asynchronous processing
+			await Task.WhenAny(tasks);
 
 			Console.WriteLine("after when any");
 
@@ -93,18 +103,25 @@ namespace Week7TaskBasedAsyncPattern
 		/// <returns>Returns a web result.</returns>
 		private static async Task<WebResult> GetWebsiteAsync(string address, CancellationTokenSource cancellationTokenSource)
 		{
-			// TODO: implement get async
-			// TODO: implement read content async
+			// contact the website, starting the task on a background thread
+			var getTask = client.GetAsync(address, cancellationTokenSource.Token);
 
 			Console.WriteLine($"Retrieving website... {address} on thread: {Thread.CurrentThread.ManagedThreadId}");
 
+			// await the task to complete
+			var response = await getTask;
+
 			Console.WriteLine($"Website {address} retrieved successfully");
+
+			// start the process of reading the content of the retrieved website
+			// on a background thread
+			var contentTask = response.Content.ReadAsStringAsync();
 
 			Console.WriteLine($"Reading content from website... {address} on thread: {Thread.CurrentThread.ManagedThreadId}");
 
 			return new WebResult(address)
 			{
-				//Content = await contentTask
+				Content = await contentTask
 			};
 		}
 	}
