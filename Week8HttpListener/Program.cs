@@ -17,6 +17,8 @@
  * Date: 2019-2-23
  */
 using System;
+using System.Net;
+using System.Text;
 
 namespace Week8HttpListener
 {
@@ -31,7 +33,59 @@ namespace Week8HttpListener
 		/// <param name="args">The arguments.</param>
 		private static void Main(string[] args)
 		{
+			var listener = new HttpListener();
+
+			listener.Prefixes.Add("http://127.0.0.1:21000/demo/");
+
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("Listener starting");
+
+			listener.Start();
+
+			Console.WriteLine("Reading to accept requests on: http://127.0.0.1:21000/demo/");
+			Console.ResetColor();
+
+			listener.BeginGetContext(HandleRequest, listener);
+
+			Console.WriteLine("Press any key to exit...");
 			Console.ReadKey();
+		}
+
+		/// <summary>
+		/// Handles the request.
+		/// </summary>
+		/// <param name="result">The result.</param>
+		private static async void HandleRequest(IAsyncResult result)
+		{
+			var listener = (HttpListener)result.AsyncState;
+			var context = listener.EndGetContext(result);
+
+			Console.WriteLine($"Received request from: {context.Request.RemoteEndPoint}");
+
+			var response = SerializeResponse($"hello this is some content, the current time is: {DateTimeOffset.Now:o}");
+
+			var writeResponseTask = context.Response.OutputStream.WriteAsync(response, 0, response.Length);
+
+			context.Response.ContentType = "text/plain;charset=UTF-8";
+			context.Response.StatusCode = 200;
+
+			await writeResponseTask;
+
+			context.Response.Close();
+
+			listener.BeginGetContext(HandleRequest, listener);
+		}
+
+		/// <summary>
+		/// Serializes the response.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <returns>Returns a byte array representing the response.</returns>
+		private static byte[] SerializeResponse(string content)
+		{
+			Console.WriteLine($"Sending response to client: {content}");
+
+			return Encoding.UTF8.GetBytes(content);
 		}
 	}
 }

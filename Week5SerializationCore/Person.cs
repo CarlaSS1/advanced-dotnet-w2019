@@ -77,7 +77,7 @@ namespace Week5SerializationCore
 			}
 			set
 			{
-				value = this.DateOfBirth.ToString("o");
+				this.DateOfBirth = DateTimeOffset.Parse(value);
 			}
 		}
 	}
