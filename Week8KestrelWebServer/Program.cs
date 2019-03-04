@@ -54,8 +54,8 @@ namespace Week8KestrelWebServer
 
 			var logger = builder.Services.GetService<ILogger<Program>>();
 
-			logger.LogInformation($"eHealth Integration Service: v{entryAssembly.GetName().Version}");
-			logger.LogInformation($"eHealth Integration Service Working Directory : {Path.GetDirectoryName(entryAssembly.Location)}");
+			logger.LogInformation($"Week 8 Demo: v{entryAssembly.GetName().Version}");
+			logger.LogInformation($"Week 8 Demo Working Directory : {Path.GetDirectoryName(entryAssembly.Location)}");
 			logger.LogInformation($"Operating System: {Environment.OSVersion.Platform} {Environment.OSVersion.VersionString}");
 			logger.LogInformation($"CLI Version: {Environment.Version}");
 			logger.LogInformation($"{entryAssembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright}");
