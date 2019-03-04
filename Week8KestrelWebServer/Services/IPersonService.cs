@@ -14,45 +14,34 @@
  * the License.
  * 
  * User: Nityan Khanna
- * Date: 2019-1-31
+ * Date: 2019-3-3
  */
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Week8KestrelWebServer.Model;
 
-namespace Week4ReflectionActivator
+namespace Week8KestrelWebServer.Services
 {
 	/// <summary>
-	/// Represents a person.
+	/// Represents a person service.
 	/// </summary>
-	public class Person
+	public interface IPersonService
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Person"/> class.
+		/// Creates a person asynchronously.
 		/// </summary>
-		public Person()
-		{
-			
-		}
-
-		public Person(string name)
-		{
-			this.Name = name;
-		}
+		/// <param name="firstName">The first name.</param>
+		/// <param name="lastName">The last name.</param>
+		/// <returns>Returns a task.</returns>
+		Task<PersonViewModel> CreatePersonAsync(string firstName, string lastName);
 
 		/// <summary>
-		/// Gets or sets the name.
+		/// Queries for a person asynchronously.
 		/// </summary>
-		/// <value>The name.</value>
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
-		/// </summary>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-		public override string ToString()
-		{
-			return $"Name: {this.Name}";
-		}
+		/// <param name="expression">The expression.</param>
+		/// <returns>Returns a list of persons which match the given predicate.</returns>
+		Task<List<PersonViewModel>> QueryPersonAsync(Expression<Func<Person, bool>> expression);
 	}
 }

@@ -14,45 +14,38 @@
  * the License.
  * 
  * User: Nityan Khanna
- * Date: 2019-1-31
+ * Date: 2019-3-3
  */
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Extensions.Logging;
 
-namespace Week4ReflectionActivator
+namespace Week8KestrelWebServer.Logging
 {
 	/// <summary>
-	/// Represents a person.
+	/// Represents a file log switch.
 	/// </summary>
-	public class Person
+	public class FileLogSwitch
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Person"/> class.
+		/// Initializes a new instance of the <see cref="FileLogSwitch"/> class.
 		/// </summary>
-		public Person()
+		/// <param name="category">The category.</param>
+		/// <param name="logLevel">The log level.</param>
+		public FileLogSwitch(string category, LogLevel logLevel)
 		{
-			
-		}
-
-		public Person(string name)
-		{
-			this.Name = name;
+			this.Category = category;
+			this.LogLevel = logLevel;
 		}
 
 		/// <summary>
-		/// Gets or sets the name.
+		/// Gets the category.
 		/// </summary>
-		/// <value>The name.</value>
-		public string Name { get; set; }
+		/// <value>The category.</value>
+		public string Category { get; }
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Gets the log level.
 		/// </summary>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-		public override string ToString()
-		{
-			return $"Name: {this.Name}";
-		}
+		/// <value>The log level.</value>
+		public LogLevel LogLevel { get; }
 	}
 }

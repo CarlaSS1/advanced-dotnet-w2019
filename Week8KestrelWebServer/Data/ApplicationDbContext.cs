@@ -14,45 +14,27 @@
  * the License.
  * 
  * User: Nityan Khanna
- * Date: 2019-1-31
+ * Date: 2019-3-3
  */
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Week8KestrelWebServer.Model;
 
-namespace Week4ReflectionActivator
+namespace Week8KestrelWebServer.Data
 {
 	/// <summary>
-	/// Represents a person.
+	/// Represents the database context for the application.
 	/// </summary>
-	public class Person
+	/// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
+	public class ApplicationDbContext : DbContext
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Person"/> class.
-		/// </summary>
-		public Person()
+		public ApplicationDbContext(DbContextOptions options) : base(options)
 		{
-			
-		}
-
-		public Person(string name)
-		{
-			this.Name = name;
 		}
 
 		/// <summary>
-		/// Gets or sets the name.
+		/// Gets or sets the persons.
 		/// </summary>
-		/// <value>The name.</value>
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
-		/// </summary>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-		public override string ToString()
-		{
-			return $"Name: {this.Name}";
-		}
+		/// <value>The persons.</value>
+		public DbSet<Person> Persons { get; set; }
 	}
 }

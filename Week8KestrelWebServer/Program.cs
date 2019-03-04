@@ -16,7 +16,16 @@
  * User: Nityan Khanna
  * Date: 2019-2-23
  */
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Week8KestrelWebServer
 {
@@ -26,12 +35,54 @@ namespace Week8KestrelWebServer
 	public class Program
 	{
 		/// <summary>
+		/// The working directory.
+		/// </summary>
+		private static string workingDirectory;
+
+		/// <summary>
 		/// Defines the entry point of the application.
 		/// </summary>
 		/// <param name="args">The arguments.</param>
-		private static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
-			Console.ReadKey();
+			workingDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			Directory.SetCurrentDirectory(workingDirectory);
+
+			var builder = CreateWebHostBuilder(args).Build();
+
+			var entryAssembly = Assembly.GetEntryAssembly();
+
+			var logger = builder.Services.GetService<ILogger<Program>>();
+
+			logger.LogInformation($"eHealth Integration Service: v{entryAssembly.GetName().Version}");
+			logger.LogInformation($"eHealth Integration Service Working Directory : {Path.GetDirectoryName(entryAssembly.Location)}");
+			logger.LogInformation($"Operating System: {Environment.OSVersion.Platform} {Environment.OSVersion.VersionString}");
+			logger.LogInformation($"CLI Version: {Environment.Version}");
+			logger.LogInformation($"{entryAssembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright}");
+
+			await builder.RunAsync();
+		}
+
+		/// <summary>
+		/// Creates the web host builder.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
+		/// <returns>Returns the web host builder.</returns>
+		private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+		{
+			var builder = WebHost.CreateDefaultBuilder(args)
+				.UseStartup<Startup>()
+				.ConfigureAppConfiguration(config =>
+				{
+					config.SetBasePath(workingDirectory);
+					config.AddXmlFile($"{workingDirectory}\\app.config", false, true);
+				})
+				.ConfigureKestrel((context, options) =>
+				{
+					options.Listen(IPAddress.Any, 9090);
+				});
+
+			return builder;
 		}
 	}
 }

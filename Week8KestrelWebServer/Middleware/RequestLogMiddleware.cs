@@ -14,45 +14,52 @@
  * the License.
  * 
  * User: Nityan Khanna
- * Date: 2019-1-31
+ * Date: 2019-3-3
  */
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Week4ReflectionActivator
+namespace Week8KestrelWebServer.Middleware
 {
 	/// <summary>
-	/// Represents a person.
+	/// Represents a request log middleware.
 	/// </summary>
-	public class Person
+	public class RequestLogMiddleware
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Person"/> class.
+		/// The next middleware in the application pipeline.
 		/// </summary>
-		public Person()
-		{
-			
-		}
+		private readonly RequestDelegate next;
 
-		public Person(string name)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RequestLogMiddleware"/> class.
+		/// </summary>
+		/// <param name="next">The next.</param>
+		public RequestLogMiddleware(RequestDelegate next)
 		{
-			this.Name = name;
+			this.next = next;
 		}
 
 		/// <summary>
-		/// Gets or sets the name.
+		/// Invokes the middleware asynchronously.
 		/// </summary>
-		/// <value>The name.</value>
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
-		/// </summary>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-		public override string ToString()
+		/// <param name="context">The context.</param>
+		/// <returns>Returns a task.</returns>
+		public async Task InvokeAsync(HttpContext context)
 		{
-			return $"Name: {this.Name}";
+
+			try
+			{
+				// TODO: log request data, await next
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 		}
 	}
 }
