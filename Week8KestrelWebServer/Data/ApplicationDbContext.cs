@@ -27,6 +27,10 @@ namespace Week8KestrelWebServer.Data
 	/// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
 	public class ApplicationDbContext : DbContext
 	{
+		public ApplicationDbContext()
+		{
+			
+		}
 		public ApplicationDbContext(DbContextOptions options) : base(options)
 		{
 		}

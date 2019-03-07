@@ -93,8 +93,6 @@ namespace Week8KestrelWebServer.Client
 
 			Console.WriteLine("Last name:");
 			var lastName = Console.ReadLine();
-
-			// TODO: implement
 		}
 
 		/// <summary>

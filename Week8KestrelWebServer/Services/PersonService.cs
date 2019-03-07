@@ -38,6 +38,11 @@ namespace Week8KestrelWebServer.Services
 		/// </summary>
 		private readonly ApplicationDbContext context;
 
+		public PersonService() : this(new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>()))
+		{
+			
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PersonService" /> class.
 		/// </summary>

@@ -29,6 +29,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Week8KestrelWebServer.Data;
+using Week8KestrelWebServer.Handlers;
 using Week8KestrelWebServer.Logging;
 using Week8KestrelWebServer.Services;
 
@@ -54,13 +55,17 @@ namespace Week8KestrelWebServer
 		/// </summary>
 		public Startup(IHostingEnvironment hostingEnvironment)
 		{
+			// get the working directory
 			var workingDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 			Directory.SetCurrentDirectory(workingDirectory);
 
+			// set the configuration instance
 			this.configuration = new ConfigurationBuilder().SetBasePath(workingDirectory)
 														   .AddXmlFile($"{workingDirectory}\\app.config", false, true)
 														   .Build();
 
+			// set the hosting environment
+			// this indicates to the runtime what environment the application should run as
 			this.hostingEnvironment = hostingEnvironment;
 
 			var environment = this.configuration.GetValue<string>("environment:value")?.ToLowerInvariant();
@@ -97,9 +102,12 @@ namespace Week8KestrelWebServer
 
 			app.Use(async (context, next) =>
 			{
+				// accesses the response object
+				// and on the event of the response starting
+				// we want to set some HTTP headers before our response
+				// is sent back to our client application
 				context.Response.OnStarting((state) =>
 				{
-					context.Response.Headers["Content-Type"] = "text/xml";
 					context.Response.Headers["X-Frame-Options"] = "deny";
 					context.Response.Headers["X-Content-Type-Options"] = "nosniff";
 					context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
@@ -109,6 +117,7 @@ namespace Week8KestrelWebServer
 					return Task.CompletedTask;
 				}, context);
 
+				// invoke the next processor in HTTP request-response pipeline
 				await next.Invoke();
 			});
 
@@ -116,7 +125,32 @@ namespace Week8KestrelWebServer
 
 			// TODO: implement Map, MapWhen
 
+			// map all the requests where the path
+			// is 'person' to our person handler
+			app.Map("/person", PersonHandler.HandlePerson);
+
+			app.MapWhen(c => c.Request.Path.Value == "/person"
+							&& c.Request.Method.ToUpperInvariant() == "GET",
+				PersonHandler.HandleGet);
+
+
 			// TODO: show app.run to handle extra requests
+
+			// any request where the path of the request
+			// is not mapped to any handler
+			// the requests will be processed below
+			app.Run(async context =>
+			{
+				// requests which do not match any of the
+				// expected 'handlers' will end up being processed here
+
+				// set the content type header, to indicate to the client application
+				// how to interpret the response
+				context.Response.Headers["Content-Type"] = "text/plain";
+
+				// write the response to the client
+				await context.Response.WriteAsync($"{DateTime.Now:o}");
+			});
 		}
 
 		/// <summary>
@@ -125,13 +159,17 @@ namespace Week8KestrelWebServer
 		/// <param name="services">The services.</param>
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// adds various logging providers to our application
 			services.AddLogging(logging =>
 			{
 				logging.ClearProviders();
+
+				// add a console log provider to our application
 				logging.AddConsole();
 
 				logging.SetMinimumLevel(Enum.Parse<LogLevel>(this.configuration.GetValue<string>("logging:minimumLevel")));
 
+				// add a file logging provider to our application
 				logging.AddFile(options =>
 				{
 					options.FileLogSwitches = this.configuration.GetSection("logging:switches:switch").GetChildren().Select(c => new FileLogSwitch(c.Key, Enum.Parse<LogLevel>(c.Value)));
@@ -141,10 +179,17 @@ namespace Week8KestrelWebServer
 
 			services.AddDbContext<ApplicationDbContext>(options =>
 			{
+				//options.UseSqlServer("Data source=.;Initial Catalog=Assignment3Db;")
 				options.UseInMemoryDatabase("Week8Db");
 			});
 
+			// register our services for the application
+			// our person service handles all the database interactions for the application
 			services.AddTransient<IPersonService, PersonService>();
+
+			// register the HttpContextAccessor that allows us to
+			// access the HTTP context instance for every request that our application
+			// receives in any class with HttpContext in the constructor
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		}
 	}

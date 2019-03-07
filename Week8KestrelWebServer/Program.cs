@@ -26,6 +26,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
+using Week8KestrelWebServer.Services;
 
 namespace Week8KestrelWebServer
 {
@@ -60,6 +61,10 @@ namespace Week8KestrelWebServer
 			logger.LogInformation($"CLI Version: {Environment.Version}");
 			logger.LogInformation($"{entryAssembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright}");
 
+			var personService = builder.Services.GetService<IPersonService>();
+
+			await personService.CreatePersonAsync("test", "last name");
+			// actually start the server implementation
 			await builder.RunAsync();
 		}
 
@@ -79,7 +84,10 @@ namespace Week8KestrelWebServer
 				})
 				.ConfigureKestrel((context, options) =>
 				{
-					options.Listen(IPAddress.Any, 9090);
+					// indicate to kestrel that we want our server to listen 
+					// on ALL available IP addresses on our computer
+					// using port 19040
+					options.Listen(IPAddress.Any, 19040);
 				});
 
 			return builder;
