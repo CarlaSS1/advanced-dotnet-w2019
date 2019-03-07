@@ -93,13 +93,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week7TaskBasedAsyncPattern"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week7AsyncProgrammingModel", "Week7AsyncProgrammingModel\Week7AsyncProgrammingModel.csproj", "{E11A6857-9F5F-467A-9CD6-26C56BA302F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week7AsyncDatabaseAccess", "Week7AsyncDatabaseAccess\Week7AsyncDatabaseAccess.csproj", "{6965D14A-6ED6-4BE6-919D-0C90E4078167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week7AsyncDatabaseAccess", "Week7AsyncDatabaseAccess\Week7AsyncDatabaseAccess.csproj", "{6965D14A-6ED6-4BE6-919D-0C90E4078167}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week8", "Week8", "{54EF5E25-A919-475C-A717-1DCB14B048EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week8HttpListener", "Week8HttpListener\Week8HttpListener.csproj", "{A65A4BB1-62D0-4277-AD43-B343B29F4649}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week8HttpListener", "Week8HttpListener\Week8HttpListener.csproj", "{A65A4BB1-62D0-4277-AD43-B343B29F4649}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week8KestrelWebServer", "Week8KestrelWebServer\Week8KestrelWebServer.csproj", "{A666457E-BA5B-4260-91E0-2A26F4DB303A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Week8KestrelWebServer", "Week8KestrelWebServer\Week8KestrelWebServer.csproj", "{A666457E-BA5B-4260-91E0-2A26F4DB303A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week8KestrelWebServer.Client", "Week8KestrelWebServer.Client\Week8KestrelWebServer.Client.csproj", "{228B80B9-AD23-4C83-A5D0-252E0D9FB254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,6 +273,10 @@ Global
 		{A666457E-BA5B-4260-91E0-2A26F4DB303A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A666457E-BA5B-4260-91E0-2A26F4DB303A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A666457E-BA5B-4260-91E0-2A26F4DB303A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{228B80B9-AD23-4C83-A5D0-252E0D9FB254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{228B80B9-AD23-4C83-A5D0-252E0D9FB254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{228B80B9-AD23-4C83-A5D0-252E0D9FB254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{228B80B9-AD23-4C83-A5D0-252E0D9FB254}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -317,6 +323,7 @@ Global
 		{6965D14A-6ED6-4BE6-919D-0C90E4078167} = {2842C11F-7E28-4924-876B-A3DDE93D707B}
 		{A65A4BB1-62D0-4277-AD43-B343B29F4649} = {54EF5E25-A919-475C-A717-1DCB14B048EB}
 		{A666457E-BA5B-4260-91E0-2A26F4DB303A} = {54EF5E25-A919-475C-A717-1DCB14B048EB}
+		{228B80B9-AD23-4C83-A5D0-252E0D9FB254} = {54EF5E25-A919-475C-A717-1DCB14B048EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B72C785-24F3-448B-A118-47850E701450}

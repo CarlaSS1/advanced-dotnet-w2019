@@ -129,6 +129,9 @@ namespace Week8KestrelWebServer
 			{
 				logging.ClearProviders();
 				logging.AddConsole();
+
+				logging.SetMinimumLevel(Enum.Parse<LogLevel>(this.configuration.GetValue<string>("logging:minimumLevel")));
+
 				logging.AddFile(options =>
 				{
 					options.FileLogSwitches = this.configuration.GetSection("logging:switches:switch").GetChildren().Select(c => new FileLogSwitch(c.Key, Enum.Parse<LogLevel>(c.Value)));
