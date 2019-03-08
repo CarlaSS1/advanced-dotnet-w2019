@@ -109,6 +109,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week8UdpListener", "Week8Ud
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week8KestrelWebServer.Shared", "Week8KestrelWebServer.Shared\Week8KestrelWebServer.Shared.csproj", "{2A3E255B-402B-4042-B69F-9A1875468997}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week9", "Week9", "{5B4C4AEB-0542-4F85-AB13-E9F516563BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week9WebSockets", "Week9WebSockets\Week9WebSockets.csproj", "{0A685B8A-0938-48F4-81EF-4F3E98F1B024}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -295,6 +299,10 @@ Global
 		{2A3E255B-402B-4042-B69F-9A1875468997}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A3E255B-402B-4042-B69F-9A1875468997}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A3E255B-402B-4042-B69F-9A1875468997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A685B8A-0938-48F4-81EF-4F3E98F1B024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A685B8A-0938-48F4-81EF-4F3E98F1B024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A685B8A-0938-48F4-81EF-4F3E98F1B024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A685B8A-0938-48F4-81EF-4F3E98F1B024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -345,6 +353,7 @@ Global
 		{FC423B92-129A-4106-A826-153A7FC2FBF4} = {54EF5E25-A919-475C-A717-1DCB14B048EB}
 		{B90C5C1F-8160-411A-A800-9AAAC772A3D7} = {54EF5E25-A919-475C-A717-1DCB14B048EB}
 		{2A3E255B-402B-4042-B69F-9A1875468997} = {54EF5E25-A919-475C-A717-1DCB14B048EB}
+		{0A685B8A-0938-48F4-81EF-4F3E98F1B024} = {5B4C4AEB-0542-4F85-AB13-E9F516563BA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B72C785-24F3-448B-A118-47850E701450}
