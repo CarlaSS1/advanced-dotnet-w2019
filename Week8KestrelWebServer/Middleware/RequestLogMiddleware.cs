@@ -17,10 +17,9 @@
  * Date: 2019-3-3
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Week8KestrelWebServer.Middleware
 {
@@ -30,17 +29,24 @@ namespace Week8KestrelWebServer.Middleware
 	public class RequestLogMiddleware
 	{
 		/// <summary>
-		/// The next middleware in the application pipeline.
+		/// The logger
+		/// </summary>
+		private readonly ILogger<RequestLogMiddleware> logger;
+
+		/// <summary>
+		/// The request delegate.
 		/// </summary>
 		private readonly RequestDelegate next;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="RequestLogMiddleware"/> class.
+		/// Initializes a new instance of the <see cref="RequestLogMiddleware" /> class.
 		/// </summary>
 		/// <param name="next">The next.</param>
-		public RequestLogMiddleware(RequestDelegate next)
+		/// <param name="logger">The logger.</param>
+		public RequestLogMiddleware(RequestDelegate next, ILogger<RequestLogMiddleware> logger)
 		{
 			this.next = next;
+			this.logger = logger;
 		}
 
 		/// <summary>
@@ -53,13 +59,22 @@ namespace Week8KestrelWebServer.Middleware
 
 			try
 			{
-				// TODO: log request data, await next
+				this.logger.LogInformation($"Trace Identifier: {context.TraceIdentifier}");
+				this.logger.LogInformation($"Request from {context.Connection.RemoteIpAddress} on port {context.Connection.RemotePort}");
+				this.logger.LogDebug($"Content Length: {context.Request.ContentLength}");
+				this.logger.LogDebug($"Content Type: {context.Request.ContentType}");
+				this.logger.LogDebug($"HTTP Method: {context.Request.Method}");
+				this.logger.LogDebug($"Host: {context.Request.Host}");
+				this.logger.LogDebug($"HTTPS: {context.Request.IsHttps}");
+				this.logger.LogDebug($"Path: {context.Request.Path}");
+				this.logger.LogDebug($"Query: {context.Request.QueryString}");
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				this.logger.LogError($"Unable to log request details: {e}");
 			}
+
+			await this.next(context);
 		}
 	}
 }

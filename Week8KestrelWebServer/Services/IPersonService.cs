@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Week8KestrelWebServer.Model;
+using Week8KestrelWebServer.Data;
 
 namespace Week8KestrelWebServer.Services
 {
@@ -35,13 +35,13 @@ namespace Week8KestrelWebServer.Services
 		/// <param name="firstName">The first name.</param>
 		/// <param name="lastName">The last name.</param>
 		/// <returns>Returns a task.</returns>
-		Task<PersonViewModel> CreatePersonAsync(string firstName, string lastName);
+		Task<Person> CreatePersonAsync(string firstName, string lastName);
 
 		/// <summary>
 		/// Queries for a person asynchronously.
 		/// </summary>
 		/// <param name="expression">The expression.</param>
 		/// <returns>Returns a list of persons which match the given predicate.</returns>
-		Task<List<PersonViewModel>> QueryPersonAsync(Expression<Func<Person, bool>> expression);
+		Task<List<Person>> QueryPersonAsync(Expression<Func<Person, bool>> expression);
 	}
 }

@@ -22,8 +22,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Week8KestrelWebServer.Data;
-using Week8KestrelWebServer.Model;
 
 namespace Week8KestrelWebServer.Services
 {
@@ -38,17 +38,18 @@ namespace Week8KestrelWebServer.Services
 		/// </summary>
 		private readonly ApplicationDbContext context;
 
-		public PersonService() : this(new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>()))
-		{
-			
-		}
+		/// <summary>
+		/// The logger.
+		/// </summary>
+		private readonly ILogger<PersonService> logger;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PersonService" /> class.
 		/// </summary>
-		public PersonService(ApplicationDbContext context)
+		public PersonService(ApplicationDbContext context, ILogger<PersonService> logger)
 		{
 			this.context = context;
+			this.logger = logger;
 		}
 
 		/// <summary>
@@ -57,7 +58,7 @@ namespace Week8KestrelWebServer.Services
 		/// <param name="firstName">The first name.</param>
 		/// <param name="lastName">The last name.</param>
 		/// <returns>Returns a task.</returns>
-		public async Task<PersonViewModel> CreatePersonAsync(string firstName, string lastName)
+		public async Task<Person> CreatePersonAsync(string firstName, string lastName)
 		{
 			// create our person object to be saved to the database
 			var person = new Person(firstName, lastName);
@@ -66,7 +67,7 @@ namespace Week8KestrelWebServer.Services
 			// the entity context being, a object or objects to be saved to the database at a later point in time
 			var addTask = this.context.Persons.AddAsync(person);
 
-			Console.WriteLine($"adding person {firstName}, {lastName} to entity context...");
+			this.logger.LogInformation($"adding person {firstName}, {lastName} to entity context...");
 
 			// await our add task to completion
 			await addTask;
@@ -74,16 +75,13 @@ namespace Week8KestrelWebServer.Services
 			// start the process of saving the changes to the database
 			var saveTask = this.context.SaveChangesAsync();
 
-			Console.WriteLine("saving changes...");
-
-			// create the response model
-			var viewModel = new PersonViewModel(person);
+			this.logger.LogInformation("saving changes...");
 
 			// await our save task to completion
 			await saveTask;
 
-			// return the response model
-			return viewModel;
+			// return the created person
+			return person;
 		}
 
 		/// <summary>
@@ -91,16 +89,16 @@ namespace Week8KestrelWebServer.Services
 		/// </summary>
 		/// <param name="expression">The expression.</param>
 		/// <returns>Returns a list of persons which match the given predicate.</returns>
-		public async Task<List<PersonViewModel>> QueryPersonAsync(Expression<Func<Person, bool>> expression)
+		public async Task<List<Person>> QueryPersonAsync(Expression<Func<Person, bool>> expression)
 		{
 			// query the database
 			var results = this.context.Persons.Where(expression);
 
 			// start the process of processing the results from the database
 			// using the ToListAsync method
-			var queryTask = results.Select(c => new PersonViewModel(c)).ToListAsync();
+			var queryTask = results.OrderByDescending(c =>c.CreationTime).ToListAsync();
 
-			Console.WriteLine("querying persons...");
+			this.logger.LogInformation("querying persons...");
 
 			// await the task to completion
 			return await queryTask;

@@ -14,30 +14,28 @@
  * the License.
  * 
  * User: Nityan Khanna
- * Date: 2019-3-3
+ * Date: 2019-3-7
  */
-using Microsoft.EntityFrameworkCore;
 
-namespace Week8KestrelWebServer.Data
+using Microsoft.AspNetCore.Builder;
+
+namespace Week8KestrelWebServer.Handlers
 {
 	/// <summary>
-	/// Represents the database context for the application.
+	/// Represents a person handler.
 	/// </summary>
-	/// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
-	public class ApplicationDbContext : DbContext
+	public interface IPersonHandler
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
+		/// Handles a GET request for a person.
 		/// </summary>
-		/// <param name="options">The options for this context.</param>
-		public ApplicationDbContext(DbContextOptions options) : base(options)
-		{
-		}
+		/// <param name="app">The application.</param>
+		void HandleGet(IApplicationBuilder app);
 
 		/// <summary>
-		/// Gets or sets the persons.
+		/// Handles a POST request for a person.
 		/// </summary>
-		/// <value>The persons.</value>
-		public DbSet<Person> Persons { get; set; }
+		/// <param name="app">The application.</param>
+		void HandlePost(IApplicationBuilder app);
 	}
 }

@@ -16,33 +16,38 @@
  * User: Nityan Khanna
  * Date: 2019-3-3
  */
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Week8KestrelWebServer.Model
+using System;
+using System.Xml.Serialization;
+
+namespace Week8KestrelWebServer.Shared
 {
 	/// <summary>
-	/// Represents a person.
+	/// Represents a person view model.
 	/// </summary>
-	public class Person
+	[XmlRoot("Person", Namespace = "http://advprogrammingdotnet.mohawkcollege.ca/model")]
+	[XmlType("Person", Namespace = "http://advprogrammingdotnet.mohawkcollege.ca/model")]
+	public class PersonViewModel
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Person"/> class.
+		/// Initializes a new instance of the <see cref="PersonViewModel" /> class.
 		/// </summary>
-		public Person()
+		public PersonViewModel()
 		{
-			this.CreationTime = DateTimeOffset.Now;
-			this.Id = Guid.NewGuid();
+
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Person"/> class.
+		/// Initializes a new instance of the <see cref="PersonViewModel" /> class.
 		/// </summary>
+		/// <param name="creationTime">The creation time.</param>
+		/// <param name="id">The identifier.</param>
 		/// <param name="firstName">The first name.</param>
 		/// <param name="lastName">The last name.</param>
-		public Person(string firstName, string lastName) : this()
+		public PersonViewModel(DateTimeOffset creationTime, Guid id, string firstName, string lastName)
 		{
+			this.CreationTime = creationTime;
+			this.Id = id;
 			this.FirstName = firstName;
 			this.LastName = lastName;
 		}
@@ -51,31 +56,39 @@ namespace Week8KestrelWebServer.Model
 		/// Gets or sets the creation time.
 		/// </summary>
 		/// <value>The creation time.</value>
-		[Required]
+		[XmlIgnore]
 		public DateTimeOffset CreationTime { get; set; }
 
 		/// <summary>
 		/// Gets or sets the identifier.
 		/// </summary>
 		/// <value>The identifier.</value>
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[XmlElement]
 		public Guid Id { get; set; }
+
+		/// <summary>
+		/// Gets or sets the creation time XML.
+		/// </summary>
+		/// <value>The creation time XML.</value>
+		[XmlElement("CreationTime")]
+		public string CreationTimeXml
+		{
+			get => this.CreationTime.ToString("o");
+			set => this.CreationTime = DateTimeOffset.Parse(value);
+		}
 
 		/// <summary>
 		/// Gets or sets the first name.
 		/// </summary>
 		/// <value>The first name.</value>
-		[Required]
-		[StringLength(128)]
-		public string  FirstName { get; set; }
+		[XmlElement]
+		public string FirstName { get; set; }
 
 		/// <summary>
 		/// Gets or sets the last name.
 		/// </summary>
 		/// <value>The last name.</value>
-		[Required]
-		[StringLength(128)]
+		[XmlElement]
 		public string LastName { get; set; }
 	}
 }

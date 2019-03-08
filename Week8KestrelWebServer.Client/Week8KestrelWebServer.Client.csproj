@@ -6,4 +6,8 @@
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Week8KestrelWebServer.Shared\Week8KestrelWebServer.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

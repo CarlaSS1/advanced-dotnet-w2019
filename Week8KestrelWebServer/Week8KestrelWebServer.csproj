@@ -34,4 +34,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Week8KestrelWebServer.Shared\Week8KestrelWebServer.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

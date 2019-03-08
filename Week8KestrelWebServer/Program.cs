@@ -63,7 +63,9 @@ namespace Week8KestrelWebServer
 
 			var personService = builder.Services.GetService<IPersonService>();
 
+			// add a demo person
 			await personService.CreatePersonAsync("test", "last name");
+
 			// actually start the server implementation
 			await builder.RunAsync();
 		}

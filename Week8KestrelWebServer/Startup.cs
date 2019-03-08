@@ -31,6 +31,7 @@ using Microsoft.EntityFrameworkCore;
 using Week8KestrelWebServer.Data;
 using Week8KestrelWebServer.Handlers;
 using Week8KestrelWebServer.Logging;
+using Week8KestrelWebServer.Middleware;
 using Week8KestrelWebServer.Services;
 
 namespace Week8KestrelWebServer
@@ -121,20 +122,11 @@ namespace Week8KestrelWebServer
 				await next.Invoke();
 			});
 
-			// TODO: add request log middleware
+			// use the request logging middleware to log information about requests
+			app.UseMiddleware<RequestLogMiddleware>();
 
-			// TODO: implement Map, MapWhen
-
-			// map all the requests where the path
-			// is 'person' to our person handler
-			app.Map("/person", PersonHandler.HandlePerson);
-
-			app.MapWhen(c => c.Request.Path.Value == "/person"
-							&& c.Request.Method.ToUpperInvariant() == "GET",
-				PersonHandler.HandleGet);
-
-
-			// TODO: show app.run to handle extra requests
+			app.MapWhen(c => c.Request.Path.Value == "/person" && c.Request.Method.ToUpperInvariant() == "GET", app.ApplicationServices.GetService<IPersonHandler>().HandleGet);
+			app.MapWhen(c => c.Request.Path.Value == "/person" && c.Request.Method.ToUpperInvariant() == "POST", app.ApplicationServices.GetService<IPersonHandler>().HandlePost);
 
 			// any request where the path of the request
 			// is not mapped to any handler
@@ -182,6 +174,8 @@ namespace Week8KestrelWebServer
 				//options.UseSqlServer("Data source=.;Initial Catalog=Assignment3Db;")
 				options.UseInMemoryDatabase("Week8Db");
 			});
+
+			services.AddTransient<IPersonHandler, PersonHandler>();
 
 			// register our services for the application
 			// our person service handles all the database interactions for the application

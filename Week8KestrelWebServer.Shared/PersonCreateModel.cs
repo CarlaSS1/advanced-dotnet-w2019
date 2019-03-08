@@ -13,65 +13,41 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: Nityan Khanna
- * Date: 2019-3-3
+ * User: nitya
+ * Date: 2019-3-7
  */
 using System;
-using System.Net.Http.Headers;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 
-namespace Week8KestrelWebServer.Model
+namespace Week8KestrelWebServer.Shared
 {
 	/// <summary>
-	/// Represents a person view model.
+	/// Represents a model to create a person.
 	/// </summary>
 	[XmlRoot("Person", Namespace = "http://advprogrammingdotnet.mohawkcollege.ca/model")]
 	[XmlType("Person", Namespace = "http://advprogrammingdotnet.mohawkcollege.ca/model")]
-	public class PersonViewModel
+	public class PersonCreateModel
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="PersonViewModel" /> class.
+		/// Initializes a new instance of the <see cref="PersonCreateModel"/> class.
 		/// </summary>
-		public PersonViewModel()
+		public PersonCreateModel()
 		{
-
+			
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="PersonViewModel"/> class.
+		/// Initializes a new instance of the <see cref="PersonCreateModel"/> class.
 		/// </summary>
-		/// <param name="person">The person.</param>
-		public PersonViewModel(Person person)
+		/// <param name="firstName">The first name.</param>
+		/// <param name="lastName">The last name.</param>
+		public PersonCreateModel(string firstName, string lastName)
 		{
-			this.CreationTime = person.CreationTime;
-			this.Id = person.Id;
-			this.FirstName = person.FirstName;
-			this.LastName = person.LastName;
-		}
-
-		/// <summary>
-		/// Gets or sets the creation time.
-		/// </summary>
-		/// <value>The creation time.</value>
-		[XmlIgnore]
-		public DateTimeOffset CreationTime { get; set; }
-
-		/// <summary>
-		/// Gets or sets the identifier.
-		/// </summary>
-		/// <value>The identifier.</value>
-		[XmlElement]
-		public Guid Id { get; set; }
-
-		/// <summary>
-		/// Gets or sets the creation time XML.
-		/// </summary>
-		/// <value>The creation time XML.</value>
-		[XmlElement("CreationTime")]
-		public string CreationTimeXml
-		{
-			get => this.CreationTime.ToString("o");
-			set => this.CreationTime = DateTimeOffset.Parse(value);
+			this.FirstName = firstName;
+			this.LastName = lastName;
 		}
 
 		/// <summary>

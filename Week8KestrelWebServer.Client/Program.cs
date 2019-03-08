@@ -17,8 +17,12 @@
  * Date: 2019-3-7
  */
 using System;
+using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using Week8KestrelWebServer.Shared;
 
 namespace Week8KestrelWebServer.Client
 {
@@ -58,16 +62,15 @@ namespace Week8KestrelWebServer.Client
 					case "1":
 						Console.ForegroundColor = ConsoleColor.Green;
 						Console.WriteLine("1 has been entered, will now start the create person workflow...");
-						// TODO: implement
+						await CreatePersonAsync();
 						break;
 					case "2":
 						Console.ForegroundColor = ConsoleColor.Green;
 						Console.WriteLine("2 has been entered, will now start the query person workflow...");
-						// TODO: implement
+						await QueryPersonAsync();
 						break;
 					case "3":
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine("3 has been entered, the program will initiate the stop process...");
+						Console.ReadKey();
 						break;
 					default:
 						Console.ForegroundColor = ConsoleColor.Red;
@@ -93,6 +96,24 @@ namespace Week8KestrelWebServer.Client
 
 			Console.WriteLine("Last name:");
 			var lastName = Console.ReadLine();
+
+			var person = new PersonCreateModel(firstName, lastName);
+
+			var serializer = new XmlSerializer(typeof(PersonCreateModel));
+			var memoryStream = new MemoryStream();
+
+			serializer.Serialize(memoryStream, person);
+
+			var content = Encoding.UTF8.GetString(memoryStream.ToArray());
+
+			var resultTask = client.PostAsync("http://localhost:19040/person", new StringContent(content));
+
+			Console.WriteLine("Creating person from client application...");
+
+			var response = await resultTask;
+
+			Console.WriteLine("Response from create operation");
+			Console.WriteLine(await response.Content.ReadAsStringAsync());
 		}
 
 		/// <summary>
@@ -105,7 +126,14 @@ namespace Week8KestrelWebServer.Client
 
 			var name = Console.ReadLine()?.ToLowerInvariant();
 
-			// TODO: implement
+			var resultTask = client.GetAsync($"http://localhost:19040/person?name={name}");
+
+			Console.WriteLine("Querying for person from client application...");
+
+			var response = await resultTask;
+
+			Console.WriteLine("Response from query operation");
+			Console.WriteLine(await response.Content.ReadAsStringAsync());
 		}
 	}
 }

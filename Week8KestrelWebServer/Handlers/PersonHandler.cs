@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,15 +28,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
-using Week8KestrelWebServer.Model;
+using Week8KestrelWebServer.Data;
 using Week8KestrelWebServer.Services;
+using Week8KestrelWebServer.Shared;
 
 namespace Week8KestrelWebServer.Handlers
 {
 	/// <summary>
 	/// Represents a person handler.
 	/// </summary>
-	public class PersonHandler
+	public class PersonHandler : IPersonHandler
 	{
 		/// <summary>
 		/// The logger.
@@ -45,7 +47,7 @@ namespace Week8KestrelWebServer.Handlers
 		/// <summary>
 		/// The person service.
 		/// </summary>
-		private static IPersonService _personService;
+		private readonly IPersonService personService;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PersonHandler" /> class.
@@ -55,61 +57,40 @@ namespace Week8KestrelWebServer.Handlers
 		public PersonHandler(ILogger<PersonHandler> logger, IPersonService personService)
 		{
 			this.logger = logger;
-			_personService = personService;
+			this.personService = personService;
 		}
 
 		/// <summary>
-		/// Handles the person.
+		/// Handles a GET request for a person.
 		/// </summary>
 		/// <param name="app">The application.</param>
-		public static void HandlePerson(IApplicationBuilder app)
+		public void HandleGet(IApplicationBuilder app)
 		{
-			app.Run(async context =>
-			{
-				//switch (context.Request.Method?.ToUpperInvariant())
-				//{
-				//	case "GET":
-				//		await HandleGet(context);
-				//		break;
-				//	case "POST":
-				//		await HandlePost(context);
-				//		break;
-				//	default:
-				//		context.Response.ContentType = "text/plain";
-				//		context.Response.StatusCode = 405; // method not allowed status code
-				//		await context.Response.WriteAsync("method not allowed");
-				//		break;
-				//}
-			});
-		}
+			this.logger.LogInformation("Handling GET request for person");
 
-		// handle all of our GET requests
-		public static void HandleGet(IApplicationBuilder app)
-		{
 			app.Run(async context =>
 			{
-				var personService = new PersonService();
 				// attempt to retrieve the name parameter from our query string
-				context.Request.Query.TryGetValue("name", out StringValues values);
+				context.Request.Query.TryGetValue("name", out var values);
 
 				// set the name
 				var name = values.FirstOrDefault();
 
 				// query the database for our person with a name of the name provided in the GET request query string
-				var results = await personService.QueryPersonAsync(
+				var resultTask = personService.QueryPersonAsync(
 					c => c.FirstName.ToLowerInvariant() == name.ToLowerInvariant()
 						|| c.LastName.ToLowerInvariant() == name.ToLowerInvariant());
 
 				// serialize the results returned, and write the result to the response
-
-				var serializer = new XmlSerializer(typeof(PersonViewModel));
-
+				var serializer = new XmlSerializer(typeof(List<PersonViewModel>));
 				var memoryStream = new MemoryStream();
-
-				serializer.Serialize(memoryStream, results);
 
 				// set the content type
 				context.Response.ContentType = "application/xml";
+
+				var results = await resultTask;
+
+				serializer.Serialize(memoryStream, results.Select(c => new PersonViewModel(c.CreationTime, c.Id, c.FirstName, c.LastName)).ToList());
 
 				// writing the response to the client
 				await context.Response.WriteAsync(Encoding.UTF8.GetString(memoryStream.ToArray()));
@@ -119,11 +100,43 @@ namespace Week8KestrelWebServer.Handlers
 			});
 		}
 
-		// handle all of our POST requests
-		public static async Task HandlePost(HttpContext context)
+		/// <summary>
+		/// Handles a POST request for a person.
+		/// </summary>
+		/// <param name="app">The application.</param>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public void HandlePost(IApplicationBuilder app)
 		{
+			this.logger.LogInformation("Handling POST request for person");
 
+			app.Run(async context =>
+			{
+				var serializer = new XmlSerializer(typeof(PersonCreateModel));
+
+				var model = (PersonCreateModel)serializer.Deserialize(context.Request.Body);
+
+				var createTask = this.personService.CreatePersonAsync(model.FirstName, model.LastName);
+
+				// create the memory stream to hold the serialized person instance
+				var memoryStream = new MemoryStream();
+
+				// set the content type
+				context.Response.ContentType = "application/xml";
+
+				serializer = new XmlSerializer(typeof(PersonViewModel));
+
+				var result = await createTask;
+
+				var personViewModel = new PersonViewModel(result.CreationTime, result.Id, result.FirstName, result.LastName);
+
+				serializer.Serialize(memoryStream, personViewModel);
+
+				// writing the response to the client
+				await context.Response.WriteAsync(Encoding.UTF8.GetString(memoryStream.ToArray()));
+
+				// no other code, except for maybe logging would
+				// be written after you write the response to the client
+			});
 		}
-
 	}
 }
