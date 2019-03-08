@@ -62,7 +62,7 @@ namespace Week8KestrelWebServer
 
 			// set the configuration instance
 			this.configuration = new ConfigurationBuilder().SetBasePath(workingDirectory)
-														   .AddXmlFile($"{workingDirectory}\\app.config", false, true)
+														   .AddXmlFile($"{workingDirectory}{Path.DirectorySeparatorChar}app.config", false, true)
 														   .Build();
 
 			// set the hosting environment

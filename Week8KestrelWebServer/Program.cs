@@ -82,7 +82,7 @@ namespace Week8KestrelWebServer
 				.ConfigureAppConfiguration(config =>
 				{
 					config.SetBasePath(workingDirectory);
-					config.AddXmlFile($"{workingDirectory}\\app.config", false, true);
+					config.AddXmlFile($"{workingDirectory}{Path.DirectorySeparatorChar}app.config", false, true);
 				})
 				.ConfigureKestrel((context, options) =>
 				{
