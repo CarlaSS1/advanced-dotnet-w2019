@@ -13,18 +13,69 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: nitya
+ * User: Nityan Khanna
  * Date: 2019-3-7
  */
 using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Week8TcpListener
 {
-	class Program
+	/// <summary>
+	/// Represents the main program.
+	/// </summary>
+	public class Program
 	{
-		static void Main(string[] args)
+		/// <summary>
+		/// Defines the entry point of the application.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
+		private static async Task Main(string[] args)
 		{
+			var tcpListener = new TcpListener(IPAddress.Any, 22000);
+
+			tcpListener.Start();
+
+			tcpListener.BeginAcceptTcpClient(async (o) => await ProcessTcpRequestAsync(o), tcpListener);
+
 			Console.WriteLine("Hello World!");
+			Console.ReadKey();
+		}
+
+		/// <summary>
+		/// Process TCP request as an asynchronous operation.
+		/// </summary>
+		/// <param name="asyncResult">The asynchronous result.</param>
+		/// <returns>Returns a task.</returns>
+		private static async Task ProcessTcpRequestAsync(IAsyncResult asyncResult)
+		{
+			var listener = (TcpListener)asyncResult.AsyncState;
+			var context = listener.EndAcceptTcpClient(asyncResult);
+
+			listener.BeginAcceptTcpClient(async (o) => await ProcessTcpRequestAsync(o), listener);
+
+			var stream = context.GetStream();
+
+			var buffer = new byte[1024];
+			int position;
+			var data = string.Empty;
+
+			while ((position = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+
+			{
+				data += Encoding.ASCII.GetString(buffer, 0, position);
+
+				Console.WriteLine($"Data received from client: {data}");
+
+				var response = Encoding.ASCII.GetBytes("this is a response from the TCP server");
+
+				await stream.WriteAsync(response, 0, response.Length);
+			}
+
+			stream.Close();
 		}
 	}
 }

@@ -13,18 +13,66 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * User: nitya
+ * User: Nityan Khanna
  * Date: 2019-3-7
  */
 using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Week8UdpListener
 {
-	class Program
+	/// <summary>
+	/// Represents the main program.
+	/// </summary>
+	public class Program
 	{
-		static void Main(string[] args)
+		/// <summary>
+		/// Defines the entry point of the application.
+		/// </summary>
+		/// <param name="args">The arguments.</param>
+		private static async Task Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			var udpListener = new UdpClient(new IPEndPoint(IPAddress.Any, 22001));
+
+			udpListener.BeginReceive(async (o) => await ProcessUdpRequestAsync(o), udpListener);
+
+			for (var i = 0; i < 5; i++)
+			{
+				var client = new UdpClient();
+
+				client.Connect(new IPEndPoint(IPAddress.Loopback, 22001));
+
+				var content = Encoding.ASCII.GetBytes("some content");
+
+				await client.SendAsync(content, content.Length);
+
+				client.Close();
+			}
+
+			Console.ReadKey();
+		}
+
+		/// <summary>
+		/// Process UDP request as an asynchronous operation.
+		/// </summary>
+		/// <param name="asyncResult">The asynchronous result.</param>
+		/// <returns>Returns a task.</returns>
+		private static async Task ProcessUdpRequestAsync(IAsyncResult asyncResult)
+		{
+			var listener = (UdpClient)asyncResult.AsyncState;
+			var endpoint = new IPEndPoint(IPAddress.Any, 0);
+			var context = listener.EndReceive(asyncResult, ref endpoint);
+
+			listener.BeginReceive(async (o) => await ProcessUdpRequestAsync(o), listener);
+
+			Console.WriteLine($"Data received from client: {Encoding.ASCII.GetString(context)}");
+
+			var content = Encoding.ASCII.GetBytes("this is a response from the UDP server");
+
+			await listener.SendAsync(content, content.Length, endpoint);
 		}
 	}
 }
